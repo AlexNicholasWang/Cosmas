@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benefits Finder</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 60px 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+        }
+
+        h1 {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 40px;
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        button {
+            padding: 20px;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-healthcare {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .btn-healthcare:hover {
+            border-color: #2e7d32;
+        }
+
+        .btn-financial {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .btn-financial:hover {
+            border-color: #1565c0;
+        }
+
+        .btn-housing {
+            background: #fff3e0;
+            color: #e65100;
+        }
+
+        .btn-housing:hover {
+            border-color: #e65100;
+        }
+    </style>
+</head>
+
+<body> 
+<div class = "container">
+    <button class = "btn-healthcare" onclick = "alert('Healthcare')">Healthcare</button>
+    <button class = "btn-financial" onclick = "alert('Financial')">Financial</button>
+    <button class = "btn-housing" onclick = "alert('Housing')">Housing</button>
+            </div>
+        </div>
+     </body>
+</html>
