@@ -1,6 +1,6 @@
-THIS DOCUMENT IS FOR THE BASIC IDEAS FOR THIS AI HACKATHON USAII PROJECT 2026
+# Cosmas - Comprehensive Online System for Managing Assitance and Services
 
-We want to create an AI assitant that helps with benefits eligibility and enrollment. We will call it COSMAS (Comprehensive Online System for Managing Assistance and Services).
+## We want to create an AI assitant that helps with benefits eligibility and enrollment. We will call it COSMAS (Comprehensive Online System for Managing Assistance and Services).
 
 We onboard users by asking them a series of questions about their personal information, income, household size, and other relevant factors. Based on their responses, COSMAS will determine which benefits programs they are eligible for and provide them with information on how to apply.    
 Cosmas then uses data scraping on the web to find the most up-to-date information on benefits programs, including eligibility criteria, application deadlines, and required documentation. It also uses natural language processing to understand user queries and provide personalized recommendations based on their specific circumstances. For example, if a user asks about food assistance programs, COSMAS can provide information on SNAP benefits and how to apply for them. If a user asks about healthcare options, COSMAS can provide information   on Medicaid and the Affordable Care Act. COSMAS can also provide users with reminders about application deadlines and follow-up on their applications to ensure they receive the benefits they are eligible for. Overall, COSMAS aims to simplify the process of accessing benefits and services for individuals and families in need.      
@@ -8,7 +8,7 @@ COSMAS will be available as a web application and a mobile app, making it access
 
 
 
-Test Case or an example case of how CASMAS would work
+## Test Case or an example case of how CASMAS would work
 Let's say we have a user named Sarah who is a single mother of two children. She has recently lost her job and is struggling to make ends meet. Sarah visits the COSMAS website and creates an account. COSMAS asks Sarah a series of questions about her personal information, income, household size, and otherrelevant factors. Based on her responses, COSMAS determines that Sarah is eligible for several benefits programs, including SNAP benefits, Medicaid            
 , and the Earned Income Tax Credit (EITC). COSMAS provides Sarah with information on how to apply for each of these programs, including the required documentation and application deadlines. COSMAS also sends Sarah reminders about upcoming deadlines and follows up on her applications to ensure she receives the benefits she is eligible for. With the help of COSMAS, Sarah is able to access the assistance she needs to support her family during this difficult time.            
 Overall, COSMAS is designed to be a comprehensive and user-friendly tool that helps individuals and families access the benefits and services they need to improve their quality of life. By leveraging AI technology, COSMAS can provide personalized recommendations and support to users, making it easier for them to navigate the complex world of benefits programs and access the assistance they need.              
