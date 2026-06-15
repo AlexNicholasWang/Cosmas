@@ -1,8 +1,8 @@
 # Cosmas - Comprehensive Online System for Managing Assitance and Services
 
-## We want to create an AI assitant that helps with benefits eligibility and enrollment. We will call it COSMAS (Comprehensive Online System for Managing Assistance and Services).
+## We want to create an AI assitant that helps with benefits eligibility and enrollment. We will call it Detective Cosmas.
 
-We onboard users by asking them a series of questions about their personal information, income, household size, and other relevant factors. Based on their responses, COSMAS will determine which benefits programs they are eligible for and provide them with information on how to apply.    
+We onboard users by asking them a series of questions about their personal information, income, household size, and other relevant factors. Based on their responses, Cosmas will determine which benefits programs they are eligible for and provide them with information on how to apply.    
 Cosmas then uses data scraping on the web to find the most up-to-date information on benefits programs, including eligibility criteria, application deadlines, and required documentation. It also uses natural language processing to understand user queries and provide personalized recommendations based on their specific circumstances. For example, if a user asks about food assistance programs, COSMAS can provide information on SNAP benefits and how to apply for them. If a user asks about healthcare options, COSMAS can provide information   on Medicaid and the Affordable Care Act. COSMAS can also provide users with reminders about application deadlines and follow-up on their applications to ensure they receive the benefits they are eligible for. Overall, COSMAS aims to simplify the process of accessing benefits and services for individuals and families in need.      
 COSMAS will be available as a web application and a mobile app, making it accessible to a wide range of users. It will also have a user-friendly interface that is easy to navigate, even for those who may not be tech-savvy.                  
 
