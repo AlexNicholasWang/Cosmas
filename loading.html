@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COSMAS Detective - Loading Screen</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #FF6B9D 0%, #FFA502 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .loading-container {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .detective-zoom {
+            font-size: 120px;
+            animation: zoom-in-out 2s ease-in-out infinite;
+            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+        }
+
+        @keyframes zoom-in-out {
+            0% {
+                transform: scale(0.5);
+                opacity: 0.3;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0.5);
+                opacity: 0.3;
+            }
+        }
+
+        .loading-text {
+            color: white;
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .loading-dots {
+            display: inline-block;
+            font-size: 28px;
+            color: white;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: white;
+            margin: 0 6px;
+            animation: bounce 1.4s ease-in-out infinite;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .dot:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes bounce {
+            0%, 80%, 100% {
+                transform: scale(0) translateY(0);
+                opacity: 0.5;
+            }
+            40% {
+                transform: scale(1) translateY(-20px);
+                opacity: 1;
+            }
+        }
+
+        .progress-bar {
+            width: 300px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: white;
+            border-radius: 10px;
+            animation: fill-progress 3s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        @keyframes fill-progress {
+            0% {
+                width: 0%;
+            }
+            50% {
+                width: 100%;
+            }
+            100% {
+                width: 0%;
+            }
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Alternative Styles */
+
+        .loading-container.style-2 {
+            gap: 3rem;
+        }
+
+        .detective-zoom.style-2 {
+            font-size: 150px;
+            animation: zoom-in-out-fast 1.5s ease-in-out infinite;
+        }
+
+        @keyframes zoom-in-out-fast {
+            0% {
+                transform: scale(0.3);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0.3);
+                opacity: 0;
+            }
+        }
+
+        .loading-text.style-2 {
+            font-size: 32px;
+            background: linear-gradient(45deg, white, rgba(255, 255, 255, 0.8));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Style 3 - Spin and Zoom */
+
+        .detective-spin {
+            font-size: 120px;
+            animation: spin-zoom 2.5s ease-in-out infinite;
+        }
+
+        @keyframes spin-zoom {
+            0% {
+                transform: scale(0.6) rotate(0deg);
+                opacity: 0.4;
+            }
+            50% {
+                transform: scale(1.3) rotate(180deg);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0.6) rotate(360deg);
+                opacity: 0.4;
+            }
+        }
+
+        /* Style 4 - Pulse */
+
+        .detective-pulse {
+            font-size: 120px;
+            animation: pulse-zoom 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-zoom {
+            0%, 100% {
+                transform: scale(1);
+                filter: drop-shadow(0 0 0px rgba(255, 255, 255, 0.8));
+            }
+            50% {
+                transform: scale(1.15);
+                filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.8));
+            }
+        }
+
+        /* Magnifying Glass Effect */
+
+        .magnifying-glass {
+            font-size: 140px;
+            animation: zoom-magnify 2s ease-in-out infinite;
+            position: relative;
+        }
+
+        @keyframes zoom-magnify {
+            0% {
+                transform: scale(0.4);
+                opacity: 0.2;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0.4);
+                opacity: 0.2;
+            }
+        }
+
+        /* Ring animation */
+
+        .loading-ring {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1rem;
+        }
+
+        .ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: spin-ring 3s linear infinite;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .ring:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .ring:nth-child(2) {
+            animation-delay: 0.5s;
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .ring:nth-child(3) {
+            animation-delay: 1s;
+            border-color: rgba(255, 255, 255, 0.7);
+        }
+
+        @keyframes spin-ring {
+            0% {
+                transform: rotate(0deg) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: rotate(360deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        .detective-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 60px;
+            z-index: 10;
+            animation: zoom-in-out-center 2s ease-in-out infinite;
+        }
+
+        @keyframes zoom-in-out-center {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(0.7);
+                opacity: 0.4;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.1);
+                opacity: 1;
+            }
+        }
+
+        /* Floating Detective */
+
+        .detective-float {
+            font-size: 100px;
+            animation: float-zoom 3s ease-in-out infinite;
+        }
+
+        @keyframes float-zoom {
+            0%, 100% {
+                transform: translateY(20px) scale(0.8);
+                opacity: 0.5;
+            }
+            50% {
+                transform: translateY(-20px) scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        /* Glowing effect */
+
+        .glow-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .glow-bg {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: glow-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes glow-pulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.5);
+                opacity: 0.6;
+            }
+        }
+
+        .detective-glow {
+            position: relative;
+            z-index: 10;
+            font-size: 120px;
+            animation: zoom-in-out 2s ease-in-out infinite;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Style 1: Classic Zoom -->
+    <div class="loading-container">
+        <div class="detective-zoom">🕵️</div>
+        <div class="loading-text">Investigating</div>
+        <div class="loading-dots">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+        <div class="subtitle">Finding your benefits...</div>
+    </div>
+
+    <!-- Uncomment to use Style 2: Fast Zoom with Gradient -->
+    <!--
+    <div class="loading-container style-2">
+        <div class="detective-zoom style-2">🕵️</div>
+        <div class="loading-text style-2">Investigating</div>
+        <div class="loading-dots">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+        <div class="subtitle">Solving your case...</div>
+    </div>
+    -->
+
+    <!-- Uncomment to use Style 3: Spin and Zoom -->
+    <!--
+    <div class="loading-container">
+        <div class="detective-spin">🕵️</div>
+        <div class="loading-text">Investigating</div>
+        <div class="loading-dots">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+        <div class="subtitle">Scanning benefits...</div>
+    </div>
+    -->
+
+    <!-- Uncomment to use Style 4: Pulse -->
+    <!--
+    <div class="loading-container">
+        <div class="detective-pulse">🕵️</div>
+        <div class="loading-text">Investigating</div>
+        <div class="loading-dots">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+        <div class="subtitle">One moment...</div>
+    </div>
+    -->
+
+    <!-- Uncomment to use Style 5: Magnifying Glass -->
+    <!--
+    <div class="loading-container">
+        <div class="magnifying-glass">🔍</div>
+        <div class="loading-text">Investigating</div>
+        <div class="loading-dots">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+        <div class="subtitle">Searching for benefits...</div>
+    </div>
+    -->
+
+    <!-- Uncomment to use Style 6: Ring Animation -->
+    <!--
+    <div class="loading-container">
+        <div class="loading-ring">
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="detective-center">🕵️</div>
+        </div>
+        <div class="loading-text">Investigating</div>
+        <div class="loading-dots">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+        <div class="subtitle">Analyzing your case...</div>
+    </div>
+    -->
+
+    <!-- Uncomment to use Style 7: Floating -->
+    <!--
+    <div class="loading-container">
+        <div class="detective-float">🕵️</div>
+        <div class="loading-text">Investigating</div>
+        <div class="loading-dots">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+        <div class="subtitle">Processing benefits...</div>
+    </div>
+    -->
+
+    <!-- Uncomment to use Style 8: Glowing -->
+    <!--
+    <div class="loading-container">
+        <div class="glow-container">
+            <div class="glow-bg"></div>
+            <div class="detective-glow">🕵️</div>
+        </div>
+        <div class="loading-text">Investigating</div>
+        <div class="loading-dots">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+        <div class="subtitle">Uncovering benefits...</div>
+    </div>
+    -->
+
+</body>
+</html>
