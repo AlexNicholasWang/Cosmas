@@ -12,7 +12,7 @@
         }
 
         html {
-            font-size: clamp(12px, 2vw, 18px);
+            font-size: clamp(13px, 2vw, 16px);
         }
 
         body {
@@ -24,7 +24,7 @@
         }
 
         .cosmas-container {
-            max-width: min(100%, 95vw);
+            max-width: 55vw;
             margin: 0 auto;
             width: 100%;
         }
@@ -32,23 +32,23 @@
         .header {
             background: linear-gradient(135deg, #FF6B9D 0%, #FFA502 100%);
             color: white;
-            padding: clamp(1rem, 5vw, 2.5rem);
+            padding: clamp(0.75rem, 2.5vw, 1.5rem);
             text-align: center;
             box-shadow: 0 8px 24px rgba(255, 107, 157, 0.2);
-            border-radius: 0 0 clamp(1.5rem, 3vw, 3rem) clamp(1.5rem, 3vw, 3rem);
+            border-radius: 0 0 clamp(1rem, 2vw, 2rem) clamp(1rem, 2vw, 2rem);
             width: 100%;
         }
 
         .header h1 {
             margin: 0;
-            font-size: clamp(1.8rem, 8vw, 3rem);
+            font-size: clamp(1.8rem, 6vw, 2.5rem);
             font-weight: 600;
             letter-spacing: -0.5px;
         }
 
         .header p {
-            margin: clamp(0.3rem, 2vw, 0.75rem) 0 0;
-            font-size: clamp(0.9rem, 2.5vw, 1.3rem);
+            margin: clamp(0.3rem, 1vw, 0.6rem) 0 0;
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
             opacity: 0.95;
             font-weight: 500;
         }
@@ -65,37 +65,37 @@
         }
 
         .content {
-            padding: clamp(1.5rem, 5vw, 3rem) clamp(1rem, 3vw, 2.25rem);
+            padding: clamp(1rem, 2.5vw, 2rem) clamp(0.75rem, 2vw, 1.5rem);
             width: 100%;
         }
 
         .mascot-container {
             text-align: center;
-            margin: 0 0 clamp(1rem, 3vw, 2.25rem) 0;
+            margin: 0 0 clamp(0.75rem, 2vw, 1.5rem) 0;
             width: 100%;
         }
 
         .mascot {
             display: inline-block;
-            font-size: clamp(4rem, 25vw, 120px);
+            font-size: clamp(3rem, 18vw, 70px);
             animation: detective-wave 2s ease-in-out infinite;
             filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));
         }
 
         .mascot.small {
-            font-size: clamp(3rem, 20vw, 90px);
+            font-size: clamp(2.5rem, 14vw, 55px);
         }
 
         @keyframes detective-wave {
             0%, 100% { transform: translateY(0px) rotate(0deg); }
-            25% { transform: translateY(-0.15em) rotate(-2deg); }
-            75% { transform: translateY(-0.15em) rotate(2deg); }
+            25% { transform: translateY(-0.3em) rotate(-2deg); }
+            75% { transform: translateY(-0.3em) rotate(2deg); }
         }
 
         .welcome-card {
             background: white;
-            border-radius: clamp(1.5rem, 3vw, 2.5rem);
-            padding: clamp(1.5rem, 5vw, 3.75rem);
+            border-radius: clamp(1rem, 2vw, 1.8rem);
+            padding: clamp(1.25rem, 3vw, 2.2rem);
             text-align: center;
             box-shadow: 0 8px 32px rgba(0,0,0,0.08);
             border: 2px solid rgba(255, 107, 157, 0.1);
@@ -104,8 +104,8 @@
         }
 
         .welcome-card h1 {
-            font-size: clamp(1.8rem, 8vw, 3rem);
-            margin: clamp(0.5rem, 2vw, 1rem) 0;
+            font-size: clamp(1.6rem, 6vw, 2.1rem);
+            margin: clamp(0.5rem, 1.5vw, 1rem) 0;
             background: linear-gradient(135deg, #FF6B9D 0%, #FFA502 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -114,19 +114,19 @@
 
         .welcome-card p {
             color: #666;
-            font-size: clamp(1rem, 3vw, 1.5rem);
-            line-height: 1.7;
-            margin: clamp(0.75rem, 2vw, 1.5rem) 0;
+            font-size: clamp(1rem, 2.8vw, 1.2rem);
+            line-height: 1.6;
+            margin: clamp(0.6rem, 1.5vw, 1.2rem) 0;
         }
 
         .form-section {
-            margin-bottom: clamp(1.5rem, 3vw, 3rem);
+            margin-bottom: clamp(1rem, 2vw, 1.8rem);
         }
 
         .form-section h2 {
-            font-size: clamp(1.3rem, 5vw, 1.8rem);
+            font-size: clamp(1.15rem, 4.5vw, 1.5rem);
             font-weight: 600;
-            margin: 0 0 clamp(1rem, 2vw, 1.5rem);
+            margin: 0 0 clamp(0.8rem, 1.5vw, 1.2rem);
             background: linear-gradient(135deg, #FF6B9D 0%, #FFA502 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -134,14 +134,14 @@
         }
 
         .form-group {
-            margin-bottom: clamp(1rem, 2vw, 1.5rem);
+            margin-bottom: clamp(0.9rem, 1.8vw, 1.3rem);
         }
 
         .form-group label {
             display: block;
-            font-size: clamp(0.95rem, 2.5vw, 1.2rem);
+            font-size: clamp(0.95rem, 2.3vw, 1.1rem);
             font-weight: 600;
-            margin-bottom: clamp(0.5rem, 1vw, 0.75rem);
+            margin-bottom: clamp(0.4rem, 0.8vw, 0.6rem);
             color: #333;
         }
 
@@ -149,17 +149,17 @@
         .form-group select,
         .form-group textarea {
             width: 100%;
-            padding: clamp(0.6rem, 2vw, 1rem);
+            padding: clamp(0.65rem, 1.8vw, 1rem);
             border: 2px solid rgba(255, 107, 157, 0.2);
-            border-radius: clamp(0.75rem, 2vw, 1.2rem);
-            font-size: clamp(0.95rem, 2.5vw, 1.2rem);
+            border-radius: clamp(0.7rem, 1.8vw, 1.1rem);
+            font-size: clamp(0.95rem, 2.3vw, 1.1rem);
             background: white;
             transition: all 0.3s;
             font-family: inherit;
         }
 
         .form-group textarea {
-            min-height: clamp(80px, 20vh, 150px);
+            min-height: clamp(80px, 18vh, 140px);
             resize: vertical;
         }
 
@@ -168,25 +168,25 @@
         .form-group textarea:focus {
             outline: none;
             border-color: #FF6B9D;
-            box-shadow: 0 0 0 clamp(2px, 0.5vw, 4px) rgba(255, 107, 157, 0.15);
+            box-shadow: 0 0 0 clamp(2px, 0.5vw, 3px) rgba(255, 107, 157, 0.15);
         }
 
         .button-group {
             display: flex;
-            gap: clamp(0.75rem, 2vw, 1.5rem);
-            margin-top: clamp(1.5rem, 3vw, 3rem);
+            gap: clamp(0.6rem, 1.5vw, 1.1rem);
+            margin-top: clamp(1rem, 2vw, 1.6rem);
             flex-wrap: wrap;
             width: 100%;
         }
 
         .button-group button {
             flex: 1;
-            min-width: clamp(100px, 40vw, 200px);
-            padding: clamp(0.75rem, 2vw, 1.5rem);
-            font-size: clamp(0.9rem, 2vw, 1.2rem);
+            min-width: clamp(90px, 38vw, 160px);
+            padding: clamp(0.65rem, 1.8vw, 1rem);
+            font-size: clamp(0.9rem, 2.1vw, 1.1rem);
             cursor: pointer;
             border: 2px solid rgba(255, 107, 157, 0.3);
-            border-radius: clamp(0.75rem, 2vw, 1.5rem);
+            border-radius: clamp(0.7rem, 1.8vw, 1.1rem);
             background: white;
             font-weight: 600;
             transition: all 0.3s;
@@ -214,9 +214,9 @@
 
         .progress-bar {
             background: rgba(255, 107, 157, 0.1);
-            height: clamp(6px, 1.5vw, 12px);
-            margin-bottom: clamp(1.5rem, 3vw, 3rem);
-            border-radius: clamp(8px, 2vw, 15px);
+            height: clamp(5px, 1.2vw, 9px);
+            margin-bottom: clamp(1.1rem, 2.3vw, 1.7rem);
+            border-radius: clamp(7px, 1.8vw, 12px);
             overflow: hidden;
             width: 100%;
         }
@@ -225,14 +225,14 @@
             background: linear-gradient(90deg, #FF6B9D 0%, #FFA502 100%);
             height: 100%;
             transition: width 0.4s ease;
-            border-radius: clamp(8px, 2vw, 15px);
+            border-radius: clamp(7px, 1.8vw, 12px);
         }
 
         .benefit-card {
             background: white;
-            border-radius: clamp(1rem, 2vw, 1.5rem);
-            padding: clamp(1rem, 3vw, 2rem);
-            margin-bottom: clamp(0.75rem, 2vw, 1.25rem);
+            border-radius: clamp(0.9rem, 1.8vw, 1.3rem);
+            padding: clamp(1rem, 2.5vw, 1.6rem);
+            margin-bottom: clamp(0.75rem, 1.5vw, 1.2rem);
             border: 2px solid rgba(255, 107, 157, 0.15);
             transition: all 0.3s;
             cursor: pointer;
@@ -246,7 +246,7 @@
         }
 
         .benefit-card.eligible {
-            border-left: clamp(3px, 1vw, 5px) solid #FF6B9D;
+            border-left: clamp(3px, 0.8vw, 5px) solid #FF6B9D;
             background: linear-gradient(135deg, rgba(255, 107, 157, 0.05) 0%, rgba(255, 165, 2, 0.05) 100%);
         }
 
@@ -254,33 +254,33 @@
             display: flex;
             align-items: flex-start;
             justify-content: space-between;
-            gap: clamp(0.75rem, 2vw, 1.5rem);
-            margin-bottom: clamp(0.75rem, 2vw, 1.5rem);
+            gap: clamp(0.6rem, 1.5vw, 1.1rem);
+            margin-bottom: clamp(0.7rem, 1.3vw, 1.1rem);
             flex-wrap: wrap;
         }
 
         .benefit-icon {
-            font-size: clamp(2rem, 8vw, 3rem);
-            min-width: clamp(2rem, 8vw, 3rem);
+            font-size: clamp(1.8rem, 6vw, 2.4rem);
+            min-width: clamp(1.8rem, 6vw, 2.4rem);
         }
 
         .benefit-title {
-            font-size: clamp(1rem, 3vw, 1.5rem);
+            font-size: clamp(1rem, 3vw, 1.25rem);
             font-weight: 600;
             color: #333;
         }
 
         .benefit-desc {
-            font-size: clamp(0.85rem, 2.5vw, 1rem);
+            font-size: clamp(0.85rem, 2.3vw, 1rem);
             color: #666;
-            margin: clamp(0.3rem, 1vw, 0.75rem) 0 clamp(0.5rem, 1.5vw, 1rem);
-            line-height: 1.5;
+            margin: clamp(0.25rem, 0.8vw, 0.5rem) 0 clamp(0.4rem, 1vw, 0.7rem);
+            line-height: 1.4;
         }
 
         .benefit-status {
-            font-size: clamp(0.75rem, 2vw, 1rem);
-            padding: clamp(0.4rem, 1vw, 0.75rem) clamp(0.75rem, 2vw, 1.5rem);
-            border-radius: clamp(0.75rem, 1.5vw, 1.2rem);
+            font-size: clamp(0.75rem, 1.8vw, 0.95rem);
+            padding: clamp(0.4rem, 0.9vw, 0.6rem) clamp(0.65rem, 1.8vw, 1.1rem);
+            border-radius: clamp(0.7rem, 1.5vw, 1.1rem);
             white-space: nowrap;
             font-weight: 600;
             background: linear-gradient(135deg, #FFE5F0 0%, #FFF4E6 100%);
@@ -289,17 +289,17 @@
 
         .benefit-details {
             background: rgba(255, 107, 157, 0.08);
-            padding: clamp(0.75rem, 2vw, 1.5rem);
-            border-radius: clamp(0.75rem, 1.5vw, 1.2rem);
+            padding: clamp(0.8rem, 1.8vw, 1.2rem);
+            border-radius: clamp(0.7rem, 1.5vw, 1.1rem);
             font-size: clamp(0.85rem, 2vw, 1rem);
         }
 
         .detail-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: clamp(0.5rem, 1vw, 0.75rem);
+            margin-bottom: clamp(0.4rem, 0.9vw, 0.6rem);
             align-items: center;
-            gap: clamp(0.5rem, 1vw, 1rem);
+            gap: clamp(0.5rem, 1vw, 0.9rem);
             flex-wrap: wrap;
         }
 
@@ -319,17 +319,17 @@
 
         .dashboard-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(clamp(80px, 25vw, 150px), 1fr));
-            gap: clamp(0.75rem, 2vw, 1.5rem);
-            margin-bottom: clamp(1.5rem, 3vw, 3rem);
+            grid-template-columns: repeat(auto-fit, minmax(clamp(75px, 24vw, 140px), 1fr));
+            gap: clamp(0.6rem, 1.3vw, 1.1rem);
+            margin-bottom: clamp(1.1rem, 2.3vw, 1.7rem);
             width: 100%;
         }
 
         .stat-box {
             background: white;
             border: 2px solid rgba(255, 107, 157, 0.15);
-            border-radius: clamp(1rem, 2vw, 1.5rem);
-            padding: clamp(1rem, 2vw, 1.5rem);
+            border-radius: clamp(0.9rem, 1.8vw, 1.3rem);
+            padding: clamp(0.8rem, 1.8vw, 1.3rem);
             text-align: center;
             transition: all 0.3s;
         }
@@ -340,7 +340,7 @@
         }
 
         .stat-number {
-            font-size: clamp(1.5rem, 6vw, 2.5rem);
+            font-size: clamp(1.4rem, 5vw, 2rem);
             font-weight: 700;
             background: linear-gradient(135deg, #FF6B9D 0%, #FFA502 100%);
             -webkit-background-clip: text;
@@ -349,54 +349,54 @@
         }
 
         .stat-label {
-            font-size: clamp(0.75rem, 2vw, 1rem);
+            font-size: clamp(0.75rem, 1.8vw, 0.95rem);
             color: #666;
-            margin-top: clamp(0.5rem, 1vw, 0.75rem);
+            margin-top: clamp(0.4rem, 0.9vw, 0.6rem);
             font-weight: 600;
         }
 
         .timeline {
             position: relative;
-            padding: clamp(1rem, 2vw, 1.5rem) 0 clamp(1rem, 2vw, 1.5rem) clamp(1.5rem, 4vw, 2.5rem);
+            padding: clamp(1rem, 1.8vw, 1.4rem) 0 clamp(1rem, 1.8vw, 1.4rem) clamp(1.2rem, 3.5vw, 2rem);
             width: 100%;
         }
 
         .timeline-item {
-            margin-bottom: clamp(1rem, 2vw, 1.75rem);
+            margin-bottom: clamp(0.85rem, 1.8vw, 1.3rem);
         }
 
         .timeline-marker {
             position: absolute;
             left: 0;
-            top: clamp(0.3rem, 1vw, 0.75rem);
-            width: clamp(12px, 2vw, 20px);
-            height: clamp(12px, 2vw, 20px);
+            top: clamp(0.3rem, 0.8vw, 0.6rem);
+            width: clamp(12px, 1.8vw, 18px);
+            height: clamp(12px, 1.8vw, 18px);
             background: linear-gradient(135deg, #FF6B9D 0%, #FFA502 100%);
             border-radius: 50%;
-            border: clamp(2px, 0.5vw, 3px) solid white;
+            border: clamp(1.5px, 0.5vw, 2.5px) solid white;
             box-shadow: 0 0 0 2px rgba(255, 107, 157, 0.3);
         }
 
         .timeline-date {
-            font-size: clamp(0.75rem, 2vw, 1rem);
+            font-size: clamp(0.75rem, 1.8vw, 0.95rem);
             color: #FF6B9D;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
         }
 
         .timeline-content {
-            font-size: clamp(0.85rem, 2.5vw, 1.1rem);
-            margin-top: clamp(0.3rem, 0.75vw, 0.5rem);
+            font-size: clamp(0.85rem, 2.2vw, 1rem);
+            margin-top: clamp(0.2rem, 0.5vw, 0.4rem);
             font-weight: 500;
         }
 
         .case-file {
             background: white;
-            border-radius: clamp(1rem, 2vw, 1.5rem);
-            padding: clamp(1rem, 3vw, 1.5rem);
-            border: 3px dashed rgba(255, 107, 157, 0.3);
-            margin: clamp(1rem, 2vw, 1.5rem) 0;
+            border-radius: clamp(0.9rem, 1.8vw, 1.3rem);
+            padding: clamp(0.9rem, 2.3vw, 1.4rem);
+            border: 2px dashed rgba(255, 107, 157, 0.3);
+            margin: clamp(0.8rem, 1.8vw, 1.3rem) 0;
             position: relative;
             width: 100%;
         }
@@ -404,36 +404,36 @@
         .case-file::before {
             content: "📋";
             position: absolute;
-            top: clamp(0.5rem, 1vw, 1rem);
-            right: clamp(0.75rem, 2vw, 1.5rem);
-            font-size: clamp(2rem, 6vw, 3rem);
+            top: clamp(0.5rem, 0.9vw, 1rem);
+            right: clamp(0.65rem, 1.8vw, 1.2rem);
+            font-size: clamp(1.6rem, 4.5vw, 2.2rem);
             opacity: 0.3;
         }
 
         .case-title {
-            font-size: clamp(1rem, 3vw, 1.3rem);
+            font-size: clamp(1rem, 3vw, 1.25rem);
             font-weight: 700;
             color: #FF6B9D;
-            margin-bottom: clamp(0.75rem, 1.5vw, 1rem);
+            margin-bottom: clamp(0.6rem, 1.2vw, 1rem);
         }
 
         .cute-badge {
             display: inline-block;
             background: linear-gradient(135deg, #FFE5F0 0%, #FFF4E6 100%);
             color: #FF6B9D;
-            padding: clamp(0.4rem, 1vw, 0.75rem) clamp(0.75rem, 2vw, 1rem);
-            border-radius: clamp(0.75rem, 1.5vw, 1.2rem);
-            font-size: clamp(0.75rem, 2vw, 1rem);
+            padding: clamp(0.35rem, 0.85vw, 0.6rem) clamp(0.6rem, 1.8vw, 1rem);
+            border-radius: clamp(0.7rem, 1.5vw, 1.1rem);
+            font-size: clamp(0.75rem, 1.8vw, 0.95rem);
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
         }
 
         h3 {
             font-size: clamp(1rem, 3vw, 1.3rem);
             font-weight: 600;
-            margin-top: clamp(1.5rem, 3vw, 2rem);
-            margin-bottom: clamp(0.75rem, 1.5vw, 1rem);
+            margin-top: clamp(1.1rem, 2.3vw, 1.7rem);
+            margin-bottom: clamp(0.65rem, 1.2vw, 1rem);
             color: #333;
         }
 
@@ -442,9 +442,9 @@
             border: none;
             padding: 0;
             color: #FF6B9D;
-            font-size: clamp(0.9rem, 2vw, 1.2rem);
+            font-size: clamp(0.85rem, 2vw, 1.05rem);
             cursor: pointer;
-            margin-bottom: clamp(1.5rem, 3vw, 2rem);
+            margin-bottom: clamp(1rem, 2vw, 1.5rem);
             font-weight: 600;
         }
 
@@ -453,13 +453,17 @@
         }
 
         .optional-label {
-            font-size: clamp(0.7rem, 1.5vw, 0.95rem);
+            font-size: clamp(0.7rem, 1.5vw, 0.9rem);
             color: #999;
             font-weight: 400;
-            margin-left: 0.5rem;
+            margin-left: 0.3rem;
         }
 
         @media (max-width: 480px) {
+            .cosmas-container {
+                max-width: 95vw;
+            }
+
             .button-group {
                 flex-direction: column;
             }
@@ -511,7 +515,7 @@
                     <div class="mascot small">🕵️</div>
                 </div>
 
-                <h2 style="text-align: center; margin-bottom: 2rem;">Clue #1: Personal Details</h2>
+                <h2 style="text-align: center; margin-bottom: 1.2rem;">Clue #1: Personal Details</h2>
                 
                 <div class="form-section">
                     <div class="form-group">
@@ -553,7 +557,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>🏛️ US Citizenship Status <span class="optional-label">(optional)</span></label>
+                        <label>🏛️ Citizenship <span class="optional-label">(optional)</span></label>
                         <select id="citizenship">
                             <option value="">Select...</option>
                             <option value="citizen">US Citizen</option>
@@ -566,7 +570,7 @@
                 
                 <div class="button-group">
                     <button onclick="switchScreen('screen-welcome')">Back</button>
-                    <button class="primary-btn" onclick="switchScreen('screen-questionnaire-2')">Next Clue →</button>
+                    <button class="primary-btn" onclick="switchScreen('screen-questionnaire-2')">Next →</button>
                 </div>
             </div>
         </div>
@@ -580,19 +584,19 @@
                     <div class="mascot small">🕵️</div>
                 </div>
 
-                <h2 style="text-align: center; margin-bottom: 2rem;">Clue #2: Family Circle</h2>
+                <h2 style="text-align: center; margin-bottom: 1.2rem;">Clue #2: Family Circle</h2>
                 
                 <div class="form-section">
                     <div class="form-group">
-                        <label>👨‍👩‍👧‍👦 Total Household Size (including yourself)</label>
+                        <label>👨‍👩‍👧‍👦 Household Size</label>
                         <input type="number" id="householdSize" min="1" max="10" placeholder="3">
                     </div>
                     <div class="form-group">
-                        <label>👶 Number of Children (under 18)</label>
+                        <label>👶 Children (under 18)</label>
                         <input type="number" id="numChildren" min="0" max="10" placeholder="0">
                     </div>
                     <div class="form-group">
-                        <label>🤝 Any dependents (elderly, disabled)?</label>
+                        <label>🤝 Dependents?</label>
                         <select id="hasDependents">
                             <option value="">Select...</option>
                             <option value="no">No</option>
@@ -600,20 +604,20 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>🏘️ Current Housing Status</label>
+                        <label>🏘️ Housing Status</label>
                         <select id="housing">
                             <option value="">Select...</option>
                             <option value="renting">Renting</option>
                             <option value="own">Own Home</option>
-                            <option value="family">Staying with Family/Friends</option>
-                            <option value="homeless">Homeless/Shelter</option>
+                            <option value="family">With Family</option>
+                            <option value="homeless">Homeless</option>
                         </select>
                     </div>
                 </div>
                 
                 <div class="button-group">
                     <button onclick="switchScreen('screen-questionnaire-1')">Back</button>
-                    <button class="primary-btn" onclick="switchScreen('screen-questionnaire-3')">Next Clue →</button>
+                    <button class="primary-btn" onclick="switchScreen('screen-questionnaire-3')">Next →</button>
                 </div>
             </div>
         </div>
@@ -627,26 +631,26 @@
                     <div class="mascot small">🕵️</div>
                 </div>
 
-                <h2 style="text-align: center; margin-bottom: 2rem;">Clue #3: Income & Work</h2>
+                <h2 style="text-align: center; margin-bottom: 1.2rem;">Clue #3: Income & Work</h2>
                 
                 <div class="form-section">
                     <div class="form-group">
-                        <label>💼 Current Employment Status</label>
+                        <label>💼 Employment</label>
                         <select id="employment">
                             <option value="">Select...</option>
                             <option value="unemployed">Unemployed</option>
-                            <option value="fulltime">Employed Full-Time</option>
-                            <option value="parttime">Employed Part-Time</option>
+                            <option value="fulltime">Full-Time</option>
+                            <option value="parttime">Part-Time</option>
                             <option value="self">Self-Employed</option>
                             <option value="retired">Retired</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>💵 Annual Household Income (before taxes)</label>
+                        <label>💵 Annual Income</label>
                         <input type="number" id="income" min="0" placeholder="$0">
                     </div>
                     <div class="form-group">
-                        <label>🎁 Other income sources? (disability, child support, etc.)</label>
+                        <label>🎁 Other income?</label>
                         <select id="otherIncome">
                             <option value="">Select...</option>
                             <option value="no">No</option>
@@ -654,7 +658,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>🏥 Do you have health insurance?</label>
+                        <label>🏥 Health Insurance?</label>
                         <select id="hasInsurance">
                             <option value="">Select...</option>
                             <option value="no">No</option>
@@ -665,7 +669,7 @@
                 
                 <div class="button-group">
                     <button onclick="switchScreen('screen-questionnaire-2')">Back</button>
-                    <button class="primary-btn" onclick="switchScreen('screen-questionnaire-4')">Next Clue →</button>
+                    <button class="primary-btn" onclick="switchScreen('screen-questionnaire-4')">Next →</button>
                 </div>
             </div>
         </div>
@@ -679,18 +683,18 @@
                     <div class="mascot small">🕵️</div>
                 </div>
 
-                <h2 style="text-align: center; margin-bottom: 2rem;">Final Clue: Your Story</h2>
+                <h2 style="text-align: center; margin-bottom: 1.2rem;">Final Clue: Your Story</h2>
                 
                 <div class="form-section">
                     <div class="form-group">
-                        <label>💬 Anything else you'd like to tell Detective COSMAS? <span class="optional-label">(optional)</span></label>
-                        <textarea id="additionalInfo" placeholder="Share any additional information that might help us find benefits for you... (health concerns, disabilities, special circumstances, etc.)"></textarea>
+                        <label>💬 Anything else? <span class="optional-label">(optional)</span></label>
+                        <textarea id="additionalInfo" placeholder="Share any additional information..."></textarea>
                     </div>
                 </div>
                 
                 <div class="button-group">
                     <button onclick="switchScreen('screen-questionnaire-3')">Back</button>
-                    <button class="primary-btn" onclick="switchScreen('screen-results')">Solve the Case! 🔍</button>
+                    <button class="primary-btn" onclick="switchScreen('screen-results')">Solve! 🔍</button>
                 </div>
             </div>
         </div>
@@ -699,112 +703,78 @@
         <div class="screen" id="screen-results">
             <div class="content">
                 <div class="mascot-container">
-                    <div class="mascot" style="font-size: clamp(3rem, 20vw, 100px);">🕵️✨</div>
+                    <div class="mascot" style="font-size: clamp(2.8rem, 14vw, 55px);">🕵️✨</div>
                 </div>
 
-                <div style="text-align: center; margin-bottom: 2rem;">
-                    <h2 style="background: linear-gradient(135deg, #FF6B9D 0%, #FFA502 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: clamp(1.5rem, 8vw, 2.5rem);">Case Solved!</h2>
-                    <p style="color: #666; font-size: clamp(0.95rem, 2.5vw, 1.2rem);">Detective COSMAS found benefits for you! 🎉</p>
+                <div style="text-align: center; margin-bottom: 1.2rem;">
+                    <h2 style="background: linear-gradient(135deg, #FF6B9D 0%, #FFA502 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: clamp(1.4rem, 5.5vw, 1.9rem); margin-bottom: 0.3rem;">Case Solved!</h2>
+                    <p style="color: #666; font-size: clamp(0.9rem, 2.3vw, 1.1rem);">Found benefits for you! 🎉</p>
                 </div>
 
                 <div class="dashboard-stats">
                     <div class="stat-box">
                         <div class="stat-number">7</div>
-                        <div class="stat-label">Benefits Found</div>
+                        <div class="stat-label">Found</div>
                     </div>
                     <div class="stat-box">
                         <div class="stat-number">$2,847</div>
-                        <div class="stat-label">Monthly Potential</div>
+                        <div class="stat-label">Monthly</div>
                     </div>
                     <div class="stat-box">
                         <div class="stat-number">3</div>
-                        <div class="stat-label">Ready Now</div>
+                        <div class="stat-label">Ready</div>
                     </div>
                 </div>
 
                 <div class="case-file">
-                    <div class="case-title">🔎 Evidence #1: SNAP Benefits</div>
+                    <div class="case-title">🔎 SNAP Benefits</div>
                     <div class="benefit-header">
                         <div>
-                            <div class="benefit-title">Food Assistance Program</div>
-                            <div class="benefit-desc">Get groceries & healthy food for your family</div>
+                            <div class="benefit-title">Food Assistance</div>
+                            <div class="benefit-desc">Groceries for your family</div>
                         </div>
                         <div class="cute-badge">Eligible!</div>
                     </div>
                     <div class="benefit-details">
                         <div class="detail-row">
-                            <span class="detail-label">💰 Est. Benefit:</span>
-                            <span class="detail-value">$650–$850/mo</span>
+                            <span class="detail-label">💰 Benefit:</span>
+                            <span class="detail-value">$650–$850</span>
                         </div>
                         <div class="detail-row">
-                            <span class="detail-label">⏱️ Apply Time:</span>
+                            <span class="detail-label">⏱️ Time:</span>
                             <span class="detail-value">10–15 min</span>
                         </div>
-                        <div class="detail-row">
-                            <span class="detail-label">📅 Decision:</span>
-                            <span class="detail-value">5–30 days</span>
-                        </div>
                     </div>
-                    <button style="width: 100%; margin-top: 1rem; background: linear-gradient(135deg, #FF6B9D 0%, #FFA502 100%); color: white; border: none; padding: clamp(0.6rem, 2vw, 1rem); border-radius: clamp(0.75rem, 2vw, 1.2rem); font-weight: 600; cursor: pointer; font-size: clamp(0.9rem, 2vw, 1rem);" onclick="switchScreen('screen-benefit-detail')">Start Application 🚀</button>
+                    <button style="width: 100%; margin-top: 0.7rem; background: linear-gradient(135deg, #FF6B9D 0%, #FFA502 100%); color: white; border: none; padding: clamp(0.65rem, 1.5vw, 0.9rem); border-radius: clamp(0.7rem, 1.5vw, 1.1rem); font-weight: 600; cursor: pointer; font-size: clamp(0.85rem, 2vw, 1rem);" onclick="switchScreen('screen-benefit-detail')">Apply 🚀</button>
                 </div>
 
                 <div class="case-file">
-                    <div class="case-title">🔎 Evidence #2: Medicaid</div>
+                    <div class="case-title">🔎 Medicaid</div>
                     <div class="benefit-header">
                         <div>
                             <div class="benefit-title">Health Insurance</div>
-                            <div class="benefit-desc">Medical, dental, vision covered</div>
+                            <div class="benefit-desc">Medical, dental, vision</div>
                         </div>
                         <div class="cute-badge">Eligible!</div>
                     </div>
                     <div class="benefit-details">
                         <div class="detail-row">
-                            <span class="detail-label">💳 Monthly Cost:</span>
+                            <span class="detail-label">💳 Cost:</span>
                             <span class="detail-value">Free/Low</span>
                         </div>
                         <div class="detail-row">
-                            <span class="detail-label">⏱️ Apply Time:</span>
+                            <span class="detail-label">⏱️ Time:</span>
                             <span class="detail-value">15–20 min</span>
                         </div>
-                        <div class="detail-row">
-                            <span class="detail-label">🎯 Starts:</span>
-                            <span class="detail-value">1st of month</span>
-                        </div>
                     </div>
-                    <button style="width: 100%; margin-top: 1rem; background: linear-gradient(135deg, #FF6B9D 0%, #FFA502 100%); color: white; border: none; padding: clamp(0.6rem, 2vw, 1rem); border-radius: clamp(0.75rem, 2vw, 1.2rem); font-weight: 600; cursor: pointer; font-size: clamp(0.9rem, 2vw, 1rem);" onclick="switchScreen('screen-benefit-detail')">Start Application 🚀</button>
+                    <button style="width: 100%; margin-top: 0.7rem; background: linear-gradient(135deg, #FF6B9D 0%, #FFA502 100%); color: white; border: none; padding: clamp(0.65rem, 1.5vw, 0.9rem); border-radius: clamp(0.7rem, 1.5vw, 1.1rem); font-weight: 600; cursor: pointer; font-size: clamp(0.85rem, 2vw, 1rem);" onclick="switchScreen('screen-benefit-detail')">Apply 🚀</button>
                 </div>
 
-                <div class="case-file">
-                    <div class="case-title">🔎 Evidence #3: WIC Benefits</div>
-                    <div class="benefit-header">
-                        <div>
-                            <div class="benefit-title">Nutrition Program</div>
-                            <div class="benefit-desc">Support for moms & kids</div>
-                        </div>
-                        <div class="cute-badge">Eligible!</div>
-                    </div>
-                    <div class="benefit-details">
-                        <div class="detail-row">
-                            <span class="detail-label">💰 Est. Benefit:</span>
-                            <span class="detail-value">$150–$250/mo</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">⏱️ Apply Time:</span>
-                            <span class="detail-value">20–25 min</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">📅 Decision:</span>
-                            <span class="detail-value">1–2 weeks</span>
-                        </div>
-                    </div>
-                    <button style="width: 100%; margin-top: 1rem; background: linear-gradient(135deg, #FF6B9D 0%, #FFA502 100%); color: white; border: none; padding: clamp(0.6rem, 2vw, 1rem); border-radius: clamp(0.75rem, 2vw, 1.2rem); font-weight: 600; cursor: pointer; font-size: clamp(0.9rem, 2vw, 1rem);" onclick="switchScreen('screen-benefit-detail')">Start Application 🚀</button>
-                </div>
-
-                <h3>🎯 4 More Benefits Found</h3>
-                <p style="color: #666; font-size: clamp(0.9rem, 2vw, 1rem);">Tax Credits • Housing • Emergency Aid • Child Care</p>
+                <h3>4 More Benefits</h3>
+                <p style="color: #666; font-size: clamp(0.9rem, 2.2vw, 1.05rem);">WIC • Housing • Emergency • Child Care</p>
 
                 <div class="button-group" style="flex-direction: column;">
-                    <button class="primary-btn" onclick="switchScreen('screen-dashboard')">My Dashboard 📋</button>
+                    <button class="primary-btn" onclick="switchScreen('screen-dashboard')">Dashboard</button>
                     <button onclick="switchScreen('screen-welcome')">New Case</button>
                 </div>
             </div>
@@ -817,13 +787,13 @@
                     <div class="mascot small">📋</div>
                 </div>
 
-                <h2 style="text-align: center; margin-bottom: 0.5rem; font-size: clamp(1.5rem, 6vw, 2rem);">My Case Tracker</h2>
-                <p style="color: #666; text-align: center; margin-bottom: 2rem; font-size: clamp(0.95rem, 2.5vw, 1.2rem);">Benefits Status 🎉</p>
+                <h2 style="text-align: center; margin-bottom: 0.4rem; font-size: clamp(1.35rem, 5vw, 1.75rem);">My Case Tracker</h2>
+                <p style="color: #666; text-align: center; margin-bottom: 1.1rem; font-size: clamp(0.95rem, 2.3vw, 1.1rem);">Status 🎉</p>
                 
                 <div class="dashboard-stats">
                     <div class="stat-box">
                         <div class="stat-number">2</div>
-                        <div class="stat-label">In Progress</div>
+                        <div class="stat-label">Progress</div>
                     </div>
                     <div class="stat-box">
                         <div class="stat-number">1</div>
@@ -845,35 +815,8 @@
                     <div class="timeline-item">
                         <div class="timeline-marker"></div>
                         <div class="timeline-date">🔄 In Review</div>
-                        <div class="timeline-content"><strong>Medicaid</strong> Decision by March 25</div>
+                        <div class="timeline-content"><strong>Medicaid</strong> By March 25</div>
                     </div>
-                    <div class="timeline-item">
-                        <div class="timeline-marker"></div>
-                        <div class="timeline-date">🚀 Started</div>
-                        <div class="timeline-content"><strong>WIC</strong> Documents needed</div>
-                    </div>
-                </div>
-
-                <div class="benefit-card" style="background: linear-gradient(135deg, #FFE5F0 0%, #FFF4E6 100%); border: 2px solid #FF6B9D;">
-                    <div style="display: flex; gap: 1rem; align-items: center;">
-                        <div style="font-size: clamp(2rem, 8vw, 3rem);">⏰</div>
-                        <div>
-                            <div style="font-weight: 600; color: #FF6B9D; font-size: clamp(1rem, 2.5vw, 1.2rem);">Documents Needed!</div>
-                            <div style="font-size: clamp(0.85rem, 2vw, 1rem); color: #666;">WIC by March 22</div>
-                            <div style="font-size: clamp(0.8rem, 1.8vw, 1rem); color: #FF6B9D; font-weight: 700;">⚡ 12 days left</div>
-                        </div>
-                    </div>
-                </div>
-
-                <h3>📂 Checklist</h3>
-                <div style="background: white; padding: clamp(1rem, 2vw, 1.5rem); border-radius: clamp(1rem, 2vw, 1.5rem); border: 2px solid rgba(255, 107, 157, 0.15);">
-                    <div style="margin-bottom: 1rem; font-weight: 600; font-size: clamp(0.95rem, 2vw, 1.1rem);">✅ Ready:</div>
-                    <div style="margin-bottom: 0.5rem; font-size: clamp(0.9rem, 2vw, 1rem);">✓ Government ID</div>
-                    <div style="margin-bottom: 1rem; font-size: clamp(0.9rem, 2vw, 1rem);">✓ Pay stubs</div>
-                    
-                    <div style="margin-bottom: 0.75rem; font-weight: 600; color: #FF6B9D; font-size: clamp(0.95rem, 2vw, 1.1rem);">🔍 Need:</div>
-                    <div style="margin-bottom: 0.5rem; font-size: clamp(0.9rem, 2vw, 1rem);">○ Address proof</div>
-                    <div style="font-size: clamp(0.9rem, 2vw, 1rem);">○ Birth certs</div>
                 </div>
 
                 <div class="button-group" style="flex-direction: column;">
@@ -888,67 +831,31 @@
             <div class="content">
                 <button class="back-button" onclick="switchScreen('screen-results')">← Back</button>
                 
-                <div style="text-align: center; margin-bottom: 2rem;">
-                    <div style="font-size: clamp(4rem, 20vw, 6rem); margin-bottom: 1rem;">🛒</div>
-                    <h2 style="margin: 0 0 0.5rem; color: #333; font-size: clamp(1.3rem, 6vw, 2rem);">SNAP Benefits</h2>
-                    <p style="color: #666; margin: 0; font-size: clamp(0.95rem, 2vw, 1.1rem);">Food Assistance</p>
+                <div style="text-align: center; margin-bottom: 1rem;">
+                    <div style="font-size: clamp(3rem, 13vw, 4rem); margin-bottom: 0.5rem;">🛒</div>
+                    <h2 style="margin: 0 0 0.4rem; color: #333; font-size: clamp(1.2rem, 4.5vw, 1.5rem);">SNAP</h2>
+                    <p style="color: #666; margin: 0; font-size: clamp(0.95rem, 2.3vw, 1.1rem);">Food Assistance</p>
                 </div>
 
-                <div class="benefit-card" style="background: linear-gradient(135deg, #FFE5F0 0%, #FFF4E6 100%); border: 3px solid #FF6B9D; text-align: center; padding: clamp(1.5rem, 3vw, 2.5rem);">
-                    <div style="font-size: clamp(2.5rem, 12vw, 4rem); margin-bottom: 1rem;">✅</div>
-                    <div style="font-size: clamp(1.2rem, 4vw, 1.8rem); font-weight: 700; color: #FF6B9D; margin-bottom: 0.5rem;">You're Eligible!</div>
-                    <div style="color: #666; font-size: clamp(0.95rem, 2vw, 1.1rem);">Your household qualifies</div>
+                <div class="benefit-card" style="background: linear-gradient(135deg, #FFE5F0 0%, #FFF4E6 100%); border: 2px solid #FF6B9D; text-align: center; padding: clamp(1.1rem, 2.5vw, 1.6rem);">
+                    <div style="font-size: clamp(2rem, 9vw, 2.8rem); margin-bottom: 0.5rem;">✅</div>
+                    <div style="font-size: clamp(1.05rem, 3.2vw, 1.35rem); font-weight: 700; color: #FF6B9D;">Eligible!</div>
                 </div>
 
-                <h3>🔍 Your Details</h3>
+                <h3>Your Details</h3>
                 <div class="benefit-details">
                     <div class="detail-row">
-                        <span class="detail-label">👥 Family:</span>
-                        <span class="detail-value">3 people</span>
+                        <span class="detail-label">Family:</span>
+                        <span class="detail-value">3</span>
                     </div>
                     <div class="detail-row">
-                        <span class="detail-label">💵 Income:</span>
-                        <span class="detail-value">$0 ✓</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">💰 Benefit:</span>
+                        <span class="detail-label">Benefit:</span>
                         <span class="detail-value">$650–$850</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">🏛️ Status:</span>
-                        <span class="detail-value">Verified ✓</span>
-                    </div>
-                </div>
-
-                <h3>📋 Needed</h3>
-                <div style="background: white; padding: clamp(1rem, 2vw, 1.5rem); border-radius: clamp(1rem, 2vw, 1.5rem); border: 2px solid rgba(255, 107, 157, 0.15); font-size: clamp(0.9rem, 2vw, 1.1rem);">
-                    <div>✓ Photo ID</div>
-                    <div>✓ Income proof</div>
-                    <div>✓ Address proof</div>
-                    <div>✓ Social Security</div>
-                </div>
-
-                <h3>🚀 How to Apply</h3>
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-marker"></div>
-                        <div style="font-weight: 600;">Start</div>
-                        <div style="font-size: clamp(0.85rem, 2vw, 0.95rem); color: #666;">Fill info (10–15 min)</div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-marker"></div>
-                        <div style="font-weight: 600;">Upload</div>
-                        <div style="font-size: clamp(0.85rem, 2vw, 0.95rem); color: #666;">Send docs (5 min)</div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-marker"></div>
-                        <div style="font-weight: 600;">Approved</div>
-                        <div style="font-size: clamp(0.85rem, 2vw, 0.95rem); color: #666;">Get EBT card!</div>
                     </div>
                 </div>
 
                 <div class="button-group" style="flex-direction: column;">
-                    <button class="primary-btn" onclick="alert('🚀 Application started!')">Apply Now 🔍</button>
+                    <button class="primary-btn" onclick="alert('Application started!')">Apply 🔍</button>
                     <button onclick="switchScreen('screen-results')">Back</button>
                 </div>
             </div>
