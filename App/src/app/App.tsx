@@ -669,7 +669,7 @@ function Landing({ onStart, caseNumber }: { onStart: () => void; caseNumber: str
               </div>
               <h1 className="font-serif text-5xl md:text-7xl text-foreground leading-none font-bold tracking-tight">
                 AGENT<br />
-                <span className="text-primary italic">LYRA</span>
+                <span className="text-primary italic">Cosmas</span>
               </h1>
             </div>
             <div className="hidden md:flex flex-col items-end font-mono text-xs text-muted-foreground gap-1 mt-1">
@@ -684,7 +684,7 @@ function Landing({ onStart, caseNumber }: { onStart: () => void; caseNumber: str
             <p className="font-mono text-sm text-foreground leading-relaxed min-h-[4.5rem]">
               &ldquo;{displayed}&rdquo;
             </p>
-            <div className="font-mono text-xs text-muted-foreground mt-3">— Agent Lyra, AI Benefits Detective</div>
+            <div className="font-mono text-xs text-muted-foreground mt-3">— Agent Cosmas, AI Benefits Detective</div>
           </div>
 
           {/* Case number */}
@@ -868,7 +868,7 @@ function QuestionScreen({
           L
         </div>
         <div>
-          <div className="font-mono text-xs text-muted-foreground mb-2">AGENT LYRA ASKS:</div>
+          <div className="font-mono text-xs text-muted-foreground mb-2">AGENT COSMAS ASKS:</div>
           <p className="font-serif text-xl md:text-2xl text-foreground font-bold leading-snug min-h-[2.5rem]">
             {displayed}
           </p>
@@ -967,7 +967,7 @@ function Processing({ onDone }: { onDone: () => void }) {
       <div className="max-w-lg w-full">
         <GoldRule />
         <div className="mt-8 mb-10">
-          <div className="font-mono text-xs text-primary tracking-widest mb-4">AGENT LYRA / ANALYSIS IN PROGRESS</div>
+          <div className="font-mono text-xs text-primary tracking-widest mb-4">AGENT COSMAS / ANALYSIS IN PROGRESS</div>
           <h2 className="font-serif text-3xl text-foreground font-bold">Processing Your Case</h2>
         </div>
 
