@@ -1,0 +1,11 @@
+{
+  "buildCommand": "cd App && npm install && npm run build",
+  "installCommand": "npm install",
+  "outputDirectory": "App/dist",
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}
