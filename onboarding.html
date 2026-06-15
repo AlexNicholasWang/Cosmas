@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Benefits Finder</title>
+    <title>Cosmas - Your Personal Benefits Detective</title>
     <style>
         * {
             margin: 0;
@@ -12,93 +12,372 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #fef3e6 0%, #f0e6ff 50%, #ffe6f0 100%);
             min-height: 100vh;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             padding: 20px;
+            position: relative;
+            overflow-x: hidden;
         }
 
-        .container {
+        /* Decorative elements */
+        .decoration {
+            position: absolute;
+            font-size: 40px;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .decoration-1 { top: 10%; left: 5%; animation: float 6s ease-in-out infinite; }
+        .decoration-2 { top: 20%; right: 8%; animation: float 8s ease-in-out infinite 1s; }
+        .decoration-3 { bottom: 15%; left: 10%; animation: float 7s ease-in-out infinite 2s; }
+        .decoration-4 { bottom: 20%; right: 5%; animation: float 9s ease-in-out infinite 0.5s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .header {
+            margin-top: 30px;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .detective-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #fff5e6 0%, #fff0f5 100%);
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #5a3a5a;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 2px solid #f0d9ff;
+        }
+
+        .badge-icon {
+            font-size: 20px;
+            animation: spin 4s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hero {
             text-align: center;
-            background: white;
-            padding: 60px 40px;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-            max-width: 500px;
+            margin-bottom: 40px;
+            max-width: 750px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .detective-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: bounce 3s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
         }
 
         h1 {
-            font-size: 32px;
-            color: #333;
-            margin-bottom: 12px;
+            font-size: 52px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #8b4d8f 0%, #c71585 50%, #ff69b4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            line-height: 1.2;
         }
 
-        p {
+        .tagline {
             font-size: 18px;
-            color: #666;
-            margin-bottom: 40px;
+            color: #6b5b77;
+            font-weight: 500;
+            margin-bottom: 25px;
         }
 
-        .buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        button {
+        .case-description {
+            background: rgba(255, 255, 255, 0.6);
             padding: 20px;
-            border: none;
-            border-radius: 12px;
-            font-size: 18px;
+            border-radius: 15px;
+            border-left: 4px solid #ff69b4;
+            color: #666;
+            font-size: 15px;
+            line-height: 1.7;
+            backdrop-filter: blur(10px);
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 50px 0;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .case-stat {
+            background: white;
+            padding: 25px 30px;
+            border-radius: 20px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            min-width: 130px;
+            border-top: 4px solid #ff69b4;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .case-stat:hover {
+            transform: translateY(-5px);
+        }
+
+        .case-stat::before {
+            content: "📋";
+            font-size: 24px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .case-stat:nth-child(2)::before {
+            content: "⏱️";
+        }
+
+        .case-stat:nth-child(3)::before {
+            content: "💰";
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 800;
+            color: #8b4d8f;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #999;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin: 40px 0 50px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .category-tab {
+            padding: 12px 22px;
+            border: 2px solid transparent;
+            border-radius: 25px;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
-            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            background: white;
+            color: #666;
         }
 
-        button:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        .category-tab.active {
+            background: linear-gradient(135deg, #8b4d8f 0%, #ff69b4 100%);
+            color: white;
+            border-color: #ff69b4;
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
         }
 
-        .btn-healthcare {
-            background: #e8f5e9;
-            color: #2e7d32;
+        .category-tab:not(.active):hover {
+            border-color: #f0d9ff;
+            background: #faf8ff;
         }
 
-        .btn-healthcare:hover {
-            border-color: #2e7d32;
+        .cta-section {
+            background: white;
+            border-radius: 30px;
+            padding: 60px 45px;
+            max-width: 620px;
+            text-align: center;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+            border: 2px solid #f0d9ff;
+            position: relative;
+            z-index: 1;
         }
 
-        .btn-financial {
-            background: #e3f2fd;
-            color: #1565c0;
+        .magnifying-glass {
+            font-size: 60px;
+            margin-bottom: 24px;
+            display: inline-block;
+            animation: investigate 2s ease-in-out infinite;
         }
 
-        .btn-financial:hover {
-            border-color: #1565c0;
+        @keyframes investigate {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(15deg) scale(1.05); }
         }
 
-        .btn-housing {
-            background: #fff3e0;
-            color: #e65100;
+        .cta-section h2 {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #8b4d8f 0%, #ff69b4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
         }
 
-        .btn-housing:hover {
-            border-color: #e65100;
+        .cta-description {
+            color: #777;
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 32px;
+        }
+
+        .investigate-btn {
+            background: linear-gradient(135deg, #8b4d8f 0%, #ff69b4 100%);
+            color: white;
+            border: none;
+            padding: 16px 45px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 6px 20px rgba(255, 105, 180, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .investigate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.4);
+        }
+
+        .investigate-btn::before {
+            content: "🔍";
+            font-size: 18px;
+        }
+
+        .footer-note {
+            margin-top: 28px;
+            font-size: 13px;
+            color: #bbb;
+            font-weight: 500;
+        }
+
+        .footer-note::before {
+            content: "✓ ";
+            color: #ff69b4;
+            font-weight: 700;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 36px;
+            }
+
+            .detective-icon {
+                font-size: 60px;
+            }
+
+            .stats {
+                flex-direction: column;
+                width: 100%;
+                margin: 30px 0;
+            }
+
+            .case-stat {
+                width: 100%;
+            }
+
+            .cta-section {
+                padding: 40px 25px;
+            }
+
+            .cta-section h2 {
+                font-size: 26px;
+            }
+
+            .tabs {
+                margin-bottom: 40px;
+            }
         }
     </style>
 </head>
+<body>
+    <!-- Floating decorations -->
+    <div class="decoration decoration-1">🔍</div>
+    <div class="decoration decoration-2">📋</div>
+    <div class="decoration decoration-3">💼</div>
+    <div class="decoration decoration-4">🎩</div>
 
-<body> 
-<div class = "container">
-    <button class = "btn-healthcare" onclick = "alert('Healthcare')">Healthcare</button>
-    <button class = "btn-financial" onclick = "alert('Financial')">Financial</button>
-    <button class = "btn-housing" onclick = "alert('Housing')">Housing</button>
-            </div>
+    <div class="header">
+        <div class="detective-badge">
+            <span class="badge-icon">🕵️</span>
+            <span>Detective Mode Activated</span>
         </div>
-     </body>
+    </div>
+
+    <div class="hero">
+        <div class="detective-icon">🕵️‍♀️</div>
+        <h1>Cosmas</h1>
+        <p class="tagline">Your Personal Benefits Detective</p>
+        <div class="case-description">
+            🔎 We've cracked the code on hidden benefits & programs. Time to close your case and claim what you deserve!
+        </div>
+    </div>
+
+    <div class="stats">
+        <div class="case-stat">
+            <div class="stat-number">50+</div>
+            <div class="stat-label">Programs</div>
+        </div>
+        <div class="case-stat">
+            <div class="stat-number">2 min</div>
+            <div class="stat-label">Investigation</div>
+        </div>
+        <div class="case-stat">
+            <div class="stat-number">$0</div>
+            <div class="stat-label">Cost</div>
+        </div>
+    </div>
+
+    <div class="tabs">
+        <button class="category-tab active">💊 Healthcare</button>
+        <button class="category-tab">💳 Financial</button>
+        <button class="category-tab">🏠 Housing</button>
+    </div>
+
+    <div class="cta-section">
+        <div class="magnifying-glass">🔍</div>
+        <h2>Case Open: Your Benefits</h2>
+        <p class="cta-description">
+            Answer a few quick questions and we'll investigate which programs & benefits you qualify for. Your case file awaits!
+        </p>
+        <button class="investigate-btn">Start Investigation</button>
+        <p class="footer-note">~2 mins · Zero data collected · Good vibes</p>
+    </div>
+</body>
 </html>
