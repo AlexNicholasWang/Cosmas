@@ -1,2 +1,5 @@
 protobuf==7.35.1
 python-dotenv==1.2.2
+google-genai
+fastapi
+pydantic
