@@ -393,7 +393,7 @@ function determineHousingPrograms(a: Record<string, string>): Program[] {
   const isVulnerable = a.vulnerable === "yes";
   const isRural = a.rural === "yes";
   const largeHousehold = ["4", "5plus"].includes(a.household_size);
-
+  var geminiAnswer = "";
   return [
     {
       name: "Section 8 Housing Choice Voucher",
@@ -462,6 +462,9 @@ function determineHousingPrograms(a: Record<string, string>): Program[] {
         ? "Your household composition and income qualify you for prioritized HOME rental assistance."
         : "HOME assistance prioritizes vulnerable household members within income guidelines.",
     },
+    {
+      body: geminiAnswer
+    },
   ];
 }
 
@@ -478,6 +481,7 @@ function determineFinancialPrograms(a: Record<string, string>): Program[] {
   const filedTaxes = ["yes", "not_required"].includes(a.filed_taxes);
   const working = ["full_time", "part_time", "self_employed"].includes(a.employment);
 
+  var geminiAnswer = "";
   return [
     {
       name: "SNAP (Food Stamps)",
@@ -554,6 +558,9 @@ function determineFinancialPrograms(a: Record<string, string>): Program[] {
       reason: hasDependents && midIncome && filedTaxes
         ? "Your dependent children and income level qualify you for the Child Tax Credit."
         : "CTC requires dependent children under 17 and income within IRS phase-out thresholds.",
+    },
+    {
+      body: geminiAnswer
     },
   ];
 }
