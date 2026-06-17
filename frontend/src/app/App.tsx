@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, FC } from "react";
 import { submitPrompt } from "../api"
+
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 type Vertical = "healthcare" | "housing" | "financials";
@@ -21,7 +22,32 @@ interface Program {
   eligible: boolean;
   reason: string;
   urgency?: "immediate" | "standard";
+  body?: string;
 }
+
+// ─── GeminiResponseRenderer Component ──────────────────────────────────────────
+
+interface GeminiResponseRendererProps {
+  response: string;
+  isLoading: boolean;
+  category: Vertical;
+}
+
+const GeminiResponseRenderer: FC<GeminiResponseRendererProps> = ({ response, isLoading, category }) => {
+  if (!response && !isLoading) return null;
+
+  return (
+    <div className="bg-card border border-border p-5 mb-8">
+      <div className="font-mono text-xs text-primary tracking-widest mb-2">AI INSIGHTS / {category.toUpperCase()}</div>
+      <div className="h-px bg-secondary mb-3" />
+      {isLoading ? (
+        <div className="font-mono text-xs text-muted-foreground animate-pulse">Analyzing additional opportunities...</div>
+      ) : response ? (
+        <div className="font-mono text-xs text-muted-foreground leading-relaxed whitespace-pre-wrap">{response}</div>
+      ) : null}
+    </div>
+  );
+};
 
 // ─── Case number generator ────────────────────────────────────────────────────
 
@@ -320,7 +346,7 @@ function determineHealthcarePrograms(a: Record<string, string>): Program[] {
   const hasChildren = a.children === "yes";
   const isPregnant = a.pregnant === "yes";
   const largeHousehold = ["4", "5plus"].includes(a.household_size);
-  var geminiAnswer = "";
+
   return [
     {
       name: "Medicaid",
@@ -377,9 +403,6 @@ function determineHealthcarePrograms(a: Record<string, string>): Program[] {
         ? "Your pregnancy and income level qualify you for expanded maternity Medicaid coverage."
         : "Maternity Medicaid is available to pregnant individuals within income guidelines.",
     },
-    {
-      body: geminiAnswer
-    },
   ];
 }
 
@@ -393,7 +416,7 @@ function determineHousingPrograms(a: Record<string, string>): Program[] {
   const isVulnerable = a.vulnerable === "yes";
   const isRural = a.rural === "yes";
   const largeHousehold = ["4", "5plus"].includes(a.household_size);
-  var geminiAnswer = "";
+
   return [
     {
       name: "Section 8 Housing Choice Voucher",
@@ -462,9 +485,6 @@ function determineHousingPrograms(a: Record<string, string>): Program[] {
         ? "Your household composition and income qualify you for prioritized HOME rental assistance."
         : "HOME assistance prioritizes vulnerable household members within income guidelines.",
     },
-    {
-      body: geminiAnswer
-    },
   ];
 }
 
@@ -481,7 +501,6 @@ function determineFinancialPrograms(a: Record<string, string>): Program[] {
   const filedTaxes = ["yes", "not_required"].includes(a.filed_taxes);
   const working = ["full_time", "part_time", "self_employed"].includes(a.employment);
 
-  var geminiAnswer = "";
   return [
     {
       name: "SNAP (Food Stamps)",
@@ -558,9 +577,6 @@ function determineFinancialPrograms(a: Record<string, string>): Program[] {
       reason: hasDependents && midIncome && filedTaxes
         ? "Your dependent children and income level qualify you for the Child Tax Credit."
         : "CTC requires dependent children under 17 and income within IRS phase-out thresholds.",
-    },
-    {
-      body: geminiAnswer
     },
   ];
 }
@@ -825,10 +841,11 @@ function QuestionScreen({
 
   const { displayed, done } = useTypewriter(current?.text ?? "", 20, true);
   sessionStorage.setItem("gemini-answer", "");
+
   useEffect(() => {
     setLogged(false);
     setSelected(answers[current?.id ?? ""] ?? "");
-  }, [currentIdx]);
+  }, [currentIdx, current?.id, answers]);
 
   const handleSelect = (value: string) => {
     setSelected(value);
@@ -844,19 +861,16 @@ function QuestionScreen({
       if (currentIdx + 1 < visibleQuestions.length) {
         setCurrentIdx((i) => i + 1);
       } else {
-        // bookmark
-	console.log("DOne");
-	var geminiAnswer = "";
-	const promptGemini = async () => {
-	  try {
-	    geminiAnswer = await submitPrompt(newAnswers, "healthcare");
-	  } catch (error) {
-	  geminiAnswer = error;
-	  }
-	  sessionStorage.setItem("gemini-answer", geminiAnswer);
-	  console.log(geminiAnswer);
-	};
-	promptGemini();
+        const promptGemini = async () => {
+          try {
+            const geminiAnswer = await submitPrompt(newAnswers, vertical);
+            sessionStorage.setItem("gemini-answer", String(geminiAnswer));
+          } catch (error) {
+            console.error("Error calling Gemini:", error);
+            sessionStorage.setItem("gemini-answer", "");
+          }
+        };
+        promptGemini();
         onComplete(newAnswers);
       }
     }, 700);
@@ -976,26 +990,18 @@ function Processing({ onDone }: { onDone: () => void }) {
   const [stepIdx, setStepIdx] = useState(0);
 
   useEffect(() => {
-    // 1. Handle transitioning through the steps
     if (stepIdx < steps.length - 1) {
       const t = setTimeout(() => setStepIdx((i) => i + 1), 480);
       return () => clearTimeout(t);
-    } 
-  
-    // 2. We are on the last step: Wait for sessionStorage, then trigger onDone
-    else {
+    } else {
       const checkStorageInterval = setInterval(() => {
         const answer = sessionStorage.getItem("gemini-answer");
-      
-        // If the answer exists and is not an empty string
         if (answer && answer !== "") {
-          clearInterval(checkStorageInterval); // Stop polling
-        
-          // Optional: Keep your 900ms delay after the data arrives
+          clearInterval(checkStorageInterval);
           const t = setTimeout(onDone, 100);
           return () => clearTimeout(t);
         }
-      }, 100); // Check every 100ms
+      }, 100);
 
       return () => clearInterval(checkStorageInterval);
     }
@@ -1049,6 +1055,7 @@ function Verdict({
   const hasEligible = eligible.length > 0;
   const immediate = eligible.filter((p) => p.urgency === "immediate");
   const meta = VERTICAL_META[vertical];
+  const geminiResponse = sessionStorage.getItem("gemini-answer") || "";
 
   return (
     <div className="min-h-screen bg-background flex flex-col p-8 md:p-16 max-w-5xl mx-auto w-full">
@@ -1094,7 +1101,13 @@ function Verdict({
           </div>
         </div>
       )}
-      <div dangerouslySetInnerHTML={{ __html: sessionStorage.getItem("gemini-answer") }} />
+
+      <GeminiResponseRenderer 
+        response={geminiResponse}
+        isLoading={false}
+        category={vertical}
+      />
+
       {/* Eligible programs */}
       {eligible.length > 0 && (
         <div className="mb-10">
@@ -1203,7 +1216,8 @@ export default function App() {
   const handleProcessingDone = () => {
     if (!vertical) return;
     const results = getEligibilityResults(vertical, answers);
-    setGeminiAnswer(results.at(-1));
+    const lastResult = results[results.length - 1];
+    setGeminiAnswer(lastResult.body || "");
     setPrograms(results.slice(0, -1));
     setStep("verdict");
   };
@@ -1245,7 +1259,6 @@ export default function App() {
 
       {step === "questions" && vertical && (
         <QuestionScreen
-          key={vertical}
           caseNumber={caseNumber}
           vertical={vertical}
           onComplete={handleQuestionsComplete}
@@ -1262,7 +1275,7 @@ export default function App() {
           vertical={vertical}
           programs={programs}
           onRestart={handleRestart}
-	  geminiAnswer={geminiAnswer}
+          geminiAnswer={geminiAnswer}
         />
       )}
     </div>
