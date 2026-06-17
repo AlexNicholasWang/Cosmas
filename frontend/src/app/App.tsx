@@ -1162,7 +1162,7 @@ function Verdict({
 
       {/* Disclaimer */}
       <div className="bg-card border border-border p-5 mb-8">
-        <div className="font-mono text-xs text-primary tracking-widest mb-2">AGENT LYRA / CASE NOTES</div>
+        <div className="font-mono text-xs text-primary tracking-widest mb-2">AGENT COSMAS / CASE NOTES</div>
         <GoldRule className="mb-3" />
         <p className="font-mono text-xs text-muted-foreground leading-relaxed">
           This determination is based on federal program guidelines and the evidence you provided. Actual eligibility is determined by the issuing agency and may vary by state, local rules, or changes in circumstances. This is not legal or financial advice. Contact 211 (dial 2-1-1) or BenefitsCheckUp.org for further assistance.
