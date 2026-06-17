@@ -1044,6 +1044,7 @@ function QuestionScreen({
   const progress = currentIdx / visibleQuestions.length;
 
   const { displayed, done } = useTypewriter(current?.text ?? "", 20, true);
+  const { displayed: processingText } = useTypewriter("Processing...", 80, logged);
   sessionStorage.setItem("gemini-answer", "");
 
   useEffect(() => {
@@ -1060,29 +1061,27 @@ const handleNext = () => {
   const newAnswers = { ...answers, [current.id]: selected };
   setAnswers(newAnswers);
   
-  // Skip logged feedback on the last question
   const isLastQuestion = currentIdx + 1 >= visibleQuestions.length;
+  
   if (!isLastQuestion) {
     setLogged(true);
-  }
-
-  setTimeout(() => {
-    if (currentIdx + 1 < visibleQuestions.length) {
+    setTimeout(() => {
       setCurrentIdx((i) => i + 1);
-    } else {
-      const promptGemini = async () => {
-        try {
-          const geminiAnswer = await submitPrompt(newAnswers, vertical);
-          sessionStorage.setItem("gemini-answer", String(geminiAnswer));
-        } catch (error) {
-          console.error("Error calling Gemini:", error);
-          sessionStorage.setItem("gemini-answer", "");
-        }
-      };
-      promptGemini();
-      onComplete(newAnswers);
-    }
-  }, isLastQuestion ? 0 : 700); // Skip delay on last question
+    }, 700);
+  } else {
+    // Last question - go straight to processing
+    const promptGemini = async () => {
+      try {
+        const geminiAnswer = await submitPrompt(newAnswers, vertical);
+        sessionStorage.setItem("gemini-answer", String(geminiAnswer));
+      } catch (error) {
+        console.error("Error calling Gemini:", error);
+        sessionStorage.setItem("gemini-answer", "");
+      }
+    };
+    promptGemini();
+    onComplete(newAnswers);
+  }
 };
 
   if (!current) return null;
@@ -1161,12 +1160,12 @@ const handleNext = () => {
       {/* Log evidence / next */}
       {done && (
         <div className="ml-12 flex items-center gap-4">
-          {logged ? (
-            <div className="font-mono text-xs text-primary flex items-center gap-2">
-              <span>◆</span> EVIDENCE LOGGED — PROCEEDING...
-            </div>
-          ) : (
-            <button
+         {logged ? (
+  <div className="font-mono text-xs text-primary">
+    {processingText}
+  </div>
+) : (
+  <button
               onClick={handleNext}
               disabled={!selected}
               className={`font-mono text-sm px-6 py-3 tracking-widest transition-all duration-150 flex items-center gap-3
