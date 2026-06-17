@@ -1044,7 +1044,6 @@ function QuestionScreen({
   const progress = currentIdx / visibleQuestions.length;
 
   const { displayed, done } = useTypewriter(current?.text ?? "", 20, true);
-  const { displayed: processingText } = useTypewriter("Processing...", 80, logged);
   sessionStorage.setItem("gemini-answer", "");
 
   useEffect(() => {
@@ -1060,16 +1059,12 @@ const handleNext = () => {
   if (!selected) return;
   const newAnswers = { ...answers, [current.id]: selected };
   setAnswers(newAnswers);
-  
+
   const isLastQuestion = currentIdx + 1 >= visibleQuestions.length;
-  
+
   if (!isLastQuestion) {
-    setLogged(true);
-    setTimeout(() => {
-      setCurrentIdx((i) => i + 1);
-    }, 700);
+    setCurrentIdx((i) => i + 1);
   } else {
-    // Last question - go straight to processing
     const promptGemini = async () => {
       try {
         const geminiAnswer = await submitPrompt(newAnswers, vertical);
@@ -1160,13 +1155,8 @@ const handleNext = () => {
       {/* Log evidence / next */}
       {done && (
         <div className="ml-12 flex items-center gap-4">
-         {logged ? (
-  <div className="font-mono text-xs text-primary">
-    {processingText}
-  </div>
-) : (
-  <button
-              onClick={handleNext}
+          <button
+            onClick={handleNext}
               disabled={!selected}
               className={`font-mono text-sm px-6 py-3 tracking-widest transition-all duration-150 flex items-center gap-3
                 ${selected
@@ -1176,7 +1166,6 @@ const handleNext = () => {
             >
               LOG EVIDENCE →
             </button>
-          )}
         </div>
       )}
 
