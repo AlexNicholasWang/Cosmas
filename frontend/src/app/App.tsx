@@ -1055,30 +1055,35 @@ function QuestionScreen({
     setSelected(value);
   };
 
-  const handleNext = () => {
-    if (!selected) return;
-    const newAnswers = { ...answers, [current.id]: selected };
-    setAnswers(newAnswers);
+const handleNext = () => {
+  if (!selected) return;
+  const newAnswers = { ...answers, [current.id]: selected };
+  setAnswers(newAnswers);
+  
+  // Skip logged feedback on the last question
+  const isLastQuestion = currentIdx + 1 >= visibleQuestions.length;
+  if (!isLastQuestion) {
     setLogged(true);
+  }
 
-    setTimeout(() => {
-      if (currentIdx + 1 < visibleQuestions.length) {
-        setCurrentIdx((i) => i + 1);
-      } else {
-        const promptGemini = async () => {
-          try {
-            const geminiAnswer = await submitPrompt(newAnswers, vertical);
-            sessionStorage.setItem("gemini-answer", String(geminiAnswer));
-          } catch (error) {
-            console.error("Error calling Gemini:", error);
-            sessionStorage.setItem("gemini-answer", "");
-          }
-        };
-        promptGemini();
-        onComplete(newAnswers);
-      }
-    }, 700);
-  };
+  setTimeout(() => {
+    if (currentIdx + 1 < visibleQuestions.length) {
+      setCurrentIdx((i) => i + 1);
+    } else {
+      const promptGemini = async () => {
+        try {
+          const geminiAnswer = await submitPrompt(newAnswers, vertical);
+          sessionStorage.setItem("gemini-answer", String(geminiAnswer));
+        } catch (error) {
+          console.error("Error calling Gemini:", error);
+          sessionStorage.setItem("gemini-answer", "");
+        }
+      };
+      promptGemini();
+      onComplete(newAnswers);
+    }
+  }, isLastQuestion ? 0 : 700); // Skip delay on last question
+};
 
   if (!current) return null;
 
