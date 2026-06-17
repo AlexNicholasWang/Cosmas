@@ -35,7 +35,6 @@ interface GeminiResponseRendererProps {
 
 const GeminiResponseRenderer: FC<GeminiResponseRendererProps> = ({ response, isLoading, category }) => {
   if (!response && !isLoading) return null;
-
   return (
     <div className="bg-card border border-border p-5 mb-8">
       <div className="font-mono text-xs text-primary tracking-widest mb-2">AI INSIGHTS / {category.toUpperCase()}</div>
@@ -43,7 +42,10 @@ const GeminiResponseRenderer: FC<GeminiResponseRendererProps> = ({ response, isL
       {isLoading ? (
         <div className="font-mono text-xs text-muted-foreground animate-pulse">Analyzing additional opportunities...</div>
       ) : response ? (
-        <div className="font-mono text-xs text-muted-foreground leading-relaxed whitespace-pre-wrap">{response}</div>
+        <div 
+          className="text-foreground leading-relaxed [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:mt-4 [&_h1]:mb-3 [&_h2]:text-xl [&_h2]:font-bold [&_h2]:mt-3 [&_h2]:mb-2 [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:mt-2 [&_h3]:mb-1 [&_p]:text-muted-foreground [&_p]:mb-3 [&_ul]:text-muted-foreground [&_ul]:mb-3 [&_li]:mb-1"
+          dangerouslySetInnerHTML={{ __html: response }}
+        />
       ) : null}
     </div>
   );
