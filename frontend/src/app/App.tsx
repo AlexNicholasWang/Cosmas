@@ -10,7 +10,7 @@ interface Question {
   id: string;
   text: string;
   subtext?: string;
-  type: "select" | "radio" | "number";
+  type: "select" | "radio" | "number" | "searchable-select";
   options?: { label: string; value: string }[];
   condition?: (answers: Record<string, string>) => boolean;
 }
@@ -24,6 +24,69 @@ interface Program {
   urgency?: "immediate" | "standard";
   body?: string;
 }
+
+// ─── California Counties Data ──────────────────────────────────────────────────
+
+const CALIFORNIA_COUNTIES = [
+  "Alameda County",
+  "Alpine County",
+  "Amador County",
+  "Butte County",
+  "Calaveras County",
+  "Colusa County",
+  "Contra Costa County",
+  "Del Norte County",
+  "El Dorado County",
+  "Fresno County",
+  "Glenn County",
+  "Humboldt County",
+  "Imperial County",
+  "Inyo County",
+  "Kern County",
+  "Kings County",
+  "Lake County",
+  "Lassen County",
+  "Los Angeles County",
+  "Madera County",
+  "Marin County",
+  "Mariposa County",
+  "Mendocino County",
+  "Merced County",
+  "Modoc County",
+  "Mono County",
+  "Monterey County",
+  "Napa County",
+  "Nevada County",
+  "Orange County",
+  "Placer County",
+  "Plumas County",
+  "Riverside County",
+  "Sacramento County",
+  "San Benito County",
+  "San Bernardino County",
+  "San Diego County",
+  "San Francisco County",
+  "San Joaquin County",
+  "San Luis Obispo County",
+  "San Mateo County",
+  "Santa Barbara County",
+  "Santa Clara County",
+  "Santa Cruz County",
+  "Shasta County",
+  "Sierra County",
+  "Siskiyou County",
+  "Solano County",
+  "Sonoma County",
+  "Stanislaus County",
+  "Sutter County",
+  "Tehama County",
+  "Trinity County",
+  "Tulare County",
+  "Tuolumne County",
+  "Ventura County",
+  "Yolo County",
+  "Yuba County",
+];
 
 // ─── GeminiResponseRenderer Component ──────────────────────────────────────────
 
@@ -51,6 +114,115 @@ const GeminiResponseRenderer: FC<GeminiResponseRendererProps> = ({ response, isL
   );
 };
 
+// ─── SearchableSelect Component ────────────────────────────────────────────────
+
+interface SearchableSelectProps {
+  options: string[];
+  value: string;
+  onChange: (value: string) => void;
+  placeholder?: string;
+  isSelected?: boolean;
+}
+
+const SearchableSelect: FC<SearchableSelectProps> = ({ 
+  options, 
+  value, 
+  onChange, 
+  placeholder = "Search and select...",
+  isSelected = false,
+}) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [search, setSearch] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const filtered = options.filter((opt) =>
+    opt.toLowerCase().includes(search.toLowerCase())
+  );
+
+  useEffect(() => {
+    if (isOpen && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => document.removeEventListener("mousedown", handleClickOutside);
+    }
+  }, [isOpen]);
+
+  return (
+    <div className="relative" ref={containerRef}>
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className={`w-full text-left font-mono text-sm px-4 py-3 border transition-all duration-150 flex items-center justify-between
+          ${isSelected
+            ? "border-primary bg-primary/10 text-foreground"
+            : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground"
+          }`}
+      >
+        <span>{value || placeholder}</span>
+        <span className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}>
+          ▼
+        </span>
+      </button>
+
+      {isOpen && (
+        <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-card border border-border shadow-lg max-h-80">
+          <input
+            ref={inputRef}
+            type="text"
+            placeholder="Search counties..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full font-mono text-sm px-4 py-3 border-b border-border bg-card text-foreground placeholder:text-muted-foreground focus:outline-none"
+          />
+          <div className="max-h-64 overflow-y-auto">
+            {filtered.length > 0 ? (
+              filtered.map((opt) => (
+                <button
+                  key={opt}
+                  onClick={() => {
+                    onChange(opt);
+                    setIsOpen(false);
+                    setSearch("");
+                  }}
+                  className={`w-full text-left font-mono text-sm px-4 py-2 transition-colors duration-150 flex items-center gap-3
+                    ${
+                      value === opt
+                        ? "bg-primary/10 text-foreground border-l-2 border-primary"
+                        : "text-muted-foreground hover:bg-primary/5 hover:text-foreground"
+                    }`}
+                >
+                  <span className={`w-3 h-3 border shrink-0 flex items-center justify-center
+                    ${value === opt ? "border-primary bg-primary" : "border-muted-foreground"}`}>
+                    {value === opt && (
+                      <span className="w-1.5 h-1.5 bg-primary-foreground block" />
+                    )}
+                  </span>
+                  {opt}
+                </button>
+              ))
+            ) : (
+              <div className="px-4 py-3 font-mono text-xs text-muted-foreground">
+                No counties found
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
 // ─── Case number generator ────────────────────────────────────────────────────
 
 function generateCaseNumber(): string {
@@ -63,6 +235,16 @@ function generateCaseNumber(): string {
 // ─── Questions per vertical ───────────────────────────────────────────────────
 
 const HEALTHCARE_QUESTIONS: Question[] = [
+  {
+    id: "county",
+    text: "Which California county do you live in?",
+    subtext: "This helps identify county-specific healthcare programs.",
+    type: "searchable-select",
+    options: CALIFORNIA_COUNTIES.map((county) => ({
+      label: county,
+      value: county.toLowerCase().replace(/\s+/g, "_"),
+    })),
+  },
   {
     id: "age",
     text: "How old are you?",
@@ -157,6 +339,16 @@ const HEALTHCARE_QUESTIONS: Question[] = [
 
 const HOUSING_QUESTIONS: Question[] = [
   {
+    id: "county",
+    text: "Which California county do you live in?",
+    subtext: "This helps identify county-specific housing assistance programs.",
+    type: "searchable-select",
+    options: CALIFORNIA_COUNTIES.map((county) => ({
+      label: county,
+      value: county.toLowerCase().replace(/\s+/g, "_"),
+    })),
+  },
+  {
     id: "housing_status",
     text: "What best describes your current housing situation?",
     type: "select",
@@ -243,6 +435,16 @@ const HOUSING_QUESTIONS: Question[] = [
 ];
 
 const FINANCIALS_QUESTIONS: Question[] = [
+  {
+    id: "county",
+    text: "Which California county do you live in?",
+    subtext: "This helps identify county-specific financial assistance programs.",
+    type: "searchable-select",
+    options: CALIFORNIA_COUNTIES.map((county) => ({
+      label: county,
+      value: county.toLowerCase().replace(/\s+/g, "_"),
+    })),
+  },
   {
     id: "employment",
     text: "What is your current employment status?",
@@ -920,25 +1122,34 @@ function QuestionScreen({
       {/* Options */}
       {done && (
         <div className="space-y-2 max-w-xl ml-12 mb-10">
-          {current.options?.map((opt) => (
-            <button
-              key={opt.value}
-              onClick={() => handleSelect(opt.value)}
-              className={`w-full text-left font-mono text-sm px-4 py-3 border transition-all duration-150 flex items-center gap-3
-                ${selected === opt.value
-                  ? "border-primary bg-primary/10 text-foreground"
-                  : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground"
-                }`}
-            >
-              <span className={`w-3 h-3 border shrink-0 flex items-center justify-center
-                ${selected === opt.value ? "border-primary bg-primary" : "border-muted-foreground"}`}>
-                {selected === opt.value && (
-                  <span className="w-1.5 h-1.5 bg-primary-foreground block" />
-                )}
-              </span>
-              {opt.label}
-            </button>
-          ))}
+          {current.type === "searchable-select" ? (
+            <SearchableSelect
+              options={CALIFORNIA_COUNTIES}
+              value={selected}
+              onChange={handleSelect}
+              isSelected={selected !== ""}
+            />
+          ) : (
+            current.options?.map((opt) => (
+              <button
+                key={opt.value}
+                onClick={() => handleSelect(opt.value)}
+                className={`w-full text-left font-mono text-sm px-4 py-3 border transition-all duration-150 flex items-center gap-3
+                  ${selected === opt.value
+                    ? "border-primary bg-primary/10 text-foreground"
+                    : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground"
+                  }`}
+              >
+                <span className={`w-3 h-3 border shrink-0 flex items-center justify-center
+                  ${selected === opt.value ? "border-primary bg-primary" : "border-muted-foreground"}`}>
+                  {selected === opt.value && (
+                    <span className="w-1.5 h-1.5 bg-primary-foreground block" />
+                  )}
+                </span>
+                {opt.label}
+              </button>
+            ))
+          )}
         </div>
       )}
 
