@@ -1065,16 +1065,6 @@ const handleNext = () => {
   if (!isLastQuestion) {
     setCurrentIdx((i) => i + 1);
   } else {
-    const promptGemini = async () => {
-      try {
-        const geminiAnswer = await submitPrompt(newAnswers, vertical);
-        sessionStorage.setItem("gemini-answer", String(geminiAnswer));
-      } catch (error) {
-        console.error("Error calling Gemini:", error);
-        sessionStorage.setItem("gemini-answer", "");
-      }
-    };
-    promptGemini();
     onComplete(newAnswers);
   }
 };
@@ -1200,14 +1190,8 @@ function Processing({ onDone }: { onDone: () => void }) {
       const t = setTimeout(() => setStepIdx((i) => i + 1), 480);
       return () => clearTimeout(t);
     } else {
-      const checkStorageInterval = setInterval(() => {
-        const answer = sessionStorage.getItem("gemini-answer");
-        if (answer && answer !== "") {
-          clearInterval(checkStorageInterval);
-          const t = setTimeout(onDone, 100);
-          return () => clearTimeout(t);
-        }
-      }, 100);
+      const t = setTimeout(onDone, 100);
+      return () => clearTimeout(t);
 
       return () => clearInterval(checkStorageInterval);
     }
@@ -1321,12 +1305,6 @@ function Verdict({
           </div>
         </div>
       )}
-
-      <GeminiResponseRenderer 
-        response={geminiResponse}
-        isLoading={false}
-        category={vertical}
-      />
 
       {/* Eligible programs */}
       {eligible.length > 0 && (
@@ -1461,9 +1439,7 @@ export default function App() {
   const handleProcessingDone = () => {
     if (!vertical) return;
     const results = getEligibilityResults(vertical, answers);
-    const lastResult = results[results.length - 1];
-    setGeminiAnswer(lastResult.body || "");
-    setPrograms(results.slice(0, -1));
+    setPrograms(results);
     setStep("verdict");
   };
 
