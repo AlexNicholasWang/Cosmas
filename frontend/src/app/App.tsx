@@ -1065,16 +1065,6 @@ const handleNext = () => {
   if (!isLastQuestion) {
     setCurrentIdx((i) => i + 1);
   } else {
-    const promptGemini = async () => {
-      try {
-        const geminiAnswer = await submitPrompt(newAnswers, vertical);
-        sessionStorage.setItem("gemini-answer", String(geminiAnswer));
-      } catch (error) {
-        console.error("Error calling Gemini:", error);
-        sessionStorage.setItem("gemini-answer", "");
-      }
-    };
-    promptGemini();
     onComplete(newAnswers);
   }
 };
@@ -1200,14 +1190,8 @@ function Processing({ onDone }: { onDone: () => void }) {
       const t = setTimeout(() => setStepIdx((i) => i + 1), 480);
       return () => clearTimeout(t);
     } else {
-      const checkStorageInterval = setInterval(() => {
-        const answer = sessionStorage.getItem("gemini-answer");
-        if (answer && answer !== "") {
-          clearInterval(checkStorageInterval);
-          const t = setTimeout(onDone, 100);
-          return () => clearTimeout(t);
-        }
-      }, 100);
+      const t = setTimeout(onDone, 100);
+      return () => clearTimeout(t);
 
       return () => clearInterval(checkStorageInterval);
     }
@@ -1249,13 +1233,27 @@ function Verdict({
   programs,
   onRestart,
   geminiAnswer,
+  onAskAI,
 }: {
   caseNumber: string;
   vertical: Vertical;
   programs: Program[];
   onRestart: () => void;
   geminiAnswer: string;
+  onAskAI: (question: string) => Promise<string | undefined>;
 }) {
+  const [userQuestion, setUserQuestion] = useState("");
+  const [aiResponse, setAiResponse] = useState("");
+  const [isAsking, setIsAsking] = useState(false);
+
+  const handleAsk = async () => {
+    if (!userQuestion.trim()) return;
+    setIsAsking(true);
+    // Call the function passed from App.tsx
+    const response = await onAskAI(userQuestion);
+    setAiResponse(response || "No response received.");
+    setIsAsking(false);
+  };
   const eligible = programs.filter((p) => p.eligible);
   const ineligible = programs.filter((p) => !p.eligible);
   const hasEligible = eligible.length > 0;
@@ -1307,12 +1305,6 @@ function Verdict({
           </div>
         </div>
       )}
-
-      <GeminiResponseRenderer 
-        response={geminiResponse}
-        isLoading={false}
-        category={vertical}
-      />
 
       {/* Eligible programs */}
       {eligible.length > 0 && (
@@ -1366,6 +1358,31 @@ function Verdict({
         </div>
       )}
 
+      {/* New Input Section at the bottom */}
+      <div className="mt-12 bg-card border border-primary/20 p-6">
+        <div className="font-mono text-xs text-primary tracking-widest mb-4">
+          ASK AGENT COSMAS
+        </div>
+        <textarea
+          value={userQuestion}
+          onChange={(e) => setUserQuestion(e.target.value)}
+          placeholder="Ask a question about your eligibility results..."
+          className="w-full bg-background border border-border p-3 font-mono text-sm text-foreground focus:border-primary outline-none"
+          rows={3}
+        />
+        <button
+          onClick={handleAsk}
+          disabled={isAsking}
+          className="mt-4 font-mono text-xs px-6 py-2 bg-primary text-primary-foreground hover:bg-foreground transition-colors"
+        >
+          {isAsking ? "ANALYZING..." : "SUBMIT QUERY →"}
+        </button>
+
+        {aiResponse && (
+          <div className="mt-6 p-4 bg-primary/5 border-l-2 border-primary font-mono text-sm text-foreground" dangerouslySetInnerHTML={{ __html: aiResponse }}/>
+        )}
+      </div>
+      
       {/* Disclaimer */}
       <div className="bg-card border border-border p-5 mb-8">
         <div className="font-mono text-xs text-primary tracking-widest mb-2">AGENT COSMAS / CASE NOTES</div>
@@ -1418,13 +1435,11 @@ export default function App() {
     setAnswers(a);
     setStep("processing");
   };
-
+  
   const handleProcessingDone = () => {
     if (!vertical) return;
     const results = getEligibilityResults(vertical, answers);
-    const lastResult = results[results.length - 1];
-    setGeminiAnswer(lastResult.body || "");
-    setPrograms(results.slice(0, -1));
+    setPrograms(results);
     setStep("verdict");
   };
 
@@ -1435,6 +1450,21 @@ export default function App() {
     setStep("landing");
   };
 
+  const runGeminiAnalysis = async (userQuestion: string) => {
+    try {
+      const geminiAnswer = await submitPrompt(
+        { 
+          ...answers, 
+          customQuestion: userQuestion 
+        }, 
+        vertical!
+      );
+      sessionStorage.setItem("gemini-answer", String(geminiAnswer));
+      return String(geminiAnswer);
+    } catch (error) {
+      console.error("Error calling Gemini:", error);
+    }
+  };
   return (
     <div
       className="min-h-screen bg-background"
@@ -1482,6 +1512,7 @@ export default function App() {
           programs={programs}
           onRestart={handleRestart}
           geminiAnswer={geminiAnswer}
+	  onAskAI={runGeminiAnalysis}
         />
       )}
     </div>
