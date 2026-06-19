@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback, FC } from "react";
-import { submitPrompt } from "../api"
+import { submitPrompt, submitChat } from "../api"
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -23,6 +23,11 @@ interface Program {
   reason: string;
   urgency?: "immediate" | "standard";
   body?: string;
+}
+
+interface ChatTurn {
+  role: "user" | "model";
+  text: string;
 }
 
 // ─── California Counties Data ──────────────────────────────────────────────────
@@ -1232,40 +1237,93 @@ function Verdict({
   vertical,
   programs,
   onRestart,
-  geminiAnswer,
-  onAskAI,
+  answers,
 }: {
   caseNumber: string;
   vertical: Vertical;
   programs: Program[];
   onRestart: () => void;
-  geminiAnswer: string;
-  onAskAI: (question: string) => Promise<string | undefined>;
+  answers: Record<string, string>;
 }) {
   const [userQuestion, setUserQuestion] = useState("");
-  const [aiResponse, setAiResponse] = useState("");
   const [isAsking, setIsAsking] = useState(false);
+  
+  // Initialize from sessionStorage to survive page reloads
+  const [history, setHistory] = useState<ChatTurn[]>(() => {
+    const saved = sessionStorage.getItem(`chat_history_${caseNumber}`);
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  // 1. Create a reference to the bottom of the chat
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // 2. Function to smoothly scroll to that reference
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  // 3. Trigger the scroll whenever history changes or Agent Cosmas starts typing
+  useEffect(() => {
+    scrollToBottom();
+  }, [history, isAsking]);
+
+  // Sync to sessionStorage on every history update
+  useEffect(() => {
+    sessionStorage.setItem(`chat_history_${caseNumber}`, JSON.stringify(history));
+  }, [history, caseNumber]);
 
   const handleAsk = async () => {
-    if (!userQuestion.trim()) return;
+    if (!userQuestion.trim() || isAsking) return;
+    
+    const currentQuestion = userQuestion;
+    setUserQuestion("");
     setIsAsking(true);
-    // Call the function passed from App.tsx
-    const response = await onAskAI(userQuestion);
-    setAiResponse(response || "No response received.");
-    setIsAsking(false);
+
+    // Optimistically show user's message in UI
+    setHistory((prev) => [...prev, { role: "user", text: currentQuestion }]);
+
+    try {
+      let data;
+      
+      // BRANCH 1: First interaction (uses submitPrompt for context injection)
+      if (history.length === 0) {
+        const userDataString = `User Context: ${JSON.stringify(answers)}. User Question: ${currentQuestion}`;
+        data = await submitPrompt(userDataString, vertical);
+      } 
+      // BRANCH 2: Subsequent interactions (uses stateless multi-turn submitChat)
+      else {
+        data = await submitChat(history, vertical, currentQuestion);
+      }
+
+      // 🛠️ FIX: Handle the difference between the two endpoints
+      // If it's a string (from /api/prompt), use it directly. 
+      // If it's an object (from /api/chat), extract .response.
+      const modelText = typeof data === "string" ? data : data?.response;
+
+      // Update state with Gemini's response
+      setHistory((prev) => [...prev, { role: "model", text: modelText || "No response received." }]);
+
+    } catch (error: any) {
+      console.error("Error asking AI:", error);
+      setHistory((prev) => [
+        ...prev, 
+        { role: "model", text: error.message || "Error communicating with Agent Cosmas. Please try again." }
+      ]);
+    } finally {
+      setIsAsking(false);
+    }
   };
+
   const eligible = programs.filter((p) => p.eligible);
   const ineligible = programs.filter((p) => !p.eligible);
   const hasEligible = eligible.length > 0;
   const immediate = eligible.filter((p) => p.urgency === "immediate");
-  const meta = VERTICAL_META[vertical];
-  const geminiResponse = sessionStorage.getItem("gemini-answer") || "";
 
   return (
     <div className="min-h-screen bg-background flex flex-col p-8 md:p-16 max-w-5xl mx-auto w-full">
-      <GoldRule />
-      <div className="mt-6 mb-2 font-mono text-xs text-primary tracking-widest">
-        CASE #{caseNumber} / {meta.label.toUpperCase()} FILE / VERDICT
+      <div className="w-full h-[2px] bg-[#c8972a] mb-6 opacity-50" />
+      <div className="mt-6 mb-2 font-mono text-xs text-[#c8972a] tracking-widest uppercase">
+        CASE #{caseNumber} / {vertical} FILE / VERDICT
       </div>
 
       {/* Verdict stamp */}
@@ -1286,21 +1344,21 @@ function Verdict({
               : "No matching programs identified."}
           </h2>
           {hasEligible && (
-            <p className="font-mono text-sm text-muted-foreground mt-3 max-w-xl">
+            <p className="font-mono text-sm text-gray-400 mt-3 max-w-xl">
               The evidence supports eligibility for the programs listed below. Each case is unique — contact the relevant agency to confirm and apply.
             </p>
           )}
         </div>
       </div>
 
-      <GoldRule className="mb-8" />
+      <div className="w-full h-[2px] bg-[#c8972a] mb-8 opacity-50" />
 
       {/* Immediate action banner */}
       {immediate.length > 0 && (
-        <div className="border border-primary/40 bg-primary/5 p-4 mb-8 flex items-start gap-3">
-          <span className="text-primary font-mono text-sm shrink-0">!</span>
+        <div className="border border-[#c8972a]/40 bg-[#c8972a]/5 p-4 mb-8 flex items-start gap-3">
+          <span className="text-[#c8972a] font-mono text-sm shrink-0">!</span>
           <div className="font-mono text-xs text-foreground">
-            <span className="text-primary font-bold">PRIORITY ACTION: </span>
+            <span className="text-[#c8972a] font-bold">PRIORITY ACTION: </span>
             {immediate.map((p) => p.name).join(", ")} — Apply as soon as possible for immediate assistance.
           </div>
         </div>
@@ -1309,26 +1367,26 @@ function Verdict({
       {/* Eligible programs */}
       {eligible.length > 0 && (
         <div className="mb-10">
-          <div className="font-mono text-xs text-primary tracking-widest mb-4">AUTHORIZED PROGRAMS ({eligible.length})</div>
+          <div className="font-mono text-xs text-[#c8972a] tracking-widest mb-4">AUTHORIZED PROGRAMS ({eligible.length})</div>
           <div className="space-y-3">
             {eligible.map((p) => (
-              <div key={p.name} className="bg-card border border-border p-5 group hover:border-primary/30 transition-colors duration-200">
+              <div key={p.name} className="bg-[#1a1a1a] border border-[#333] p-5 group hover:border-[#c8972a]/30 transition-colors duration-200">
                 <div className="flex items-start justify-between gap-4 mb-3">
                   <div>
                     <div className="flex items-center gap-3 mb-1">
-                      <span className="font-mono text-xs text-primary">◆ ELIGIBLE</span>
+                      <span className="font-mono text-xs text-[#c8972a]">◆ ELIGIBLE</span>
                       {p.urgency === "immediate" && (
-                        <span className="font-mono text-xs text-destructive border border-destructive px-2 py-0.5">PRIORITY</span>
+                        <span className="font-mono text-xs text-red-500 border border-red-500 px-2 py-0.5">PRIORITY</span>
                       )}
                     </div>
                     <h3 className="font-serif text-lg text-foreground font-bold">{p.name}</h3>
-                    <div className="font-mono text-xs text-muted-foreground">{p.agency}</div>
+                    <div className="font-mono text-xs text-gray-400">{p.agency}</div>
                   </div>
                 </div>
-                <GoldRule className="mb-3" />
-                <p className="font-mono text-xs text-muted-foreground mb-3 leading-relaxed">{p.description}</p>
+                <div className="w-full h-[1px] bg-[#c8972a] mb-3 opacity-30" />
+                <p className="font-mono text-xs text-gray-400 mb-3 leading-relaxed">{p.description}</p>
                 <div className="font-mono text-xs text-foreground">
-                  <span className="text-primary mr-2">WHY:</span>{p.reason}
+                  <span className="text-[#c8972a] mr-2">WHY:</span>{p.reason}
                 </div>
               </div>
             ))}
@@ -1339,17 +1397,17 @@ function Verdict({
       {/* Ineligible programs */}
       {ineligible.length > 0 && (
         <div className="mb-10">
-          <div className="font-mono text-xs text-muted-foreground tracking-widest mb-4">
+          <div className="font-mono text-xs text-gray-500 tracking-widest mb-4">
             REVIEWED — DID NOT QUALIFY ({ineligible.length})
           </div>
           <div className="space-y-2">
             {ineligible.map((p) => (
-              <div key={p.name} className="bg-card border border-border p-4 opacity-50">
+              <div key={p.name} className="bg-[#1a1a1a] border border-[#333] p-4 opacity-50">
                 <div className="flex items-start justify-between">
                   <div>
-                    <div className="font-mono text-xs text-muted-foreground mb-1">✕ INELIGIBLE</div>
+                    <div className="font-mono text-xs text-gray-500 mb-1">✕ INELIGIBLE</div>
                     <div className="font-serif text-sm text-foreground font-bold">{p.name}</div>
-                    <div className="font-mono text-xs text-muted-foreground mt-1">{p.reason}</div>
+                    <div className="font-mono text-xs text-gray-500 mt-1">{p.reason}</div>
                   </div>
                 </div>
               </div>
@@ -1358,37 +1416,83 @@ function Verdict({
         </div>
       )}
 
-      {/* New Input Section at the bottom */}
-      <div className="mt-12 bg-card border border-primary/20 p-6">
-        <div className="font-mono text-xs text-primary tracking-widest mb-4">
+      {/* Expanding Chat Section */}
+      <div className="mt-12 bg-[#1a1a1a] border border-[#c8972a]/20 p-6 flex flex-col">
+        <div className="font-mono text-xs text-[#c8972a] tracking-widest mb-4">
           ASK AGENT COSMAS
         </div>
+
+        {/* Chat History Window */}
+        {history.length > 0 && (
+          <div className="mb-6 space-y-4 max-h-[600px] overflow-y-auto pr-2 flex-grow transition-all duration-300">
+            {history.map((msg, idx) => (
+              <div key={idx} className={`flex flex-col ${msg.role === "user" ? "items-end" : "items-start"}`}>
+                <div className="font-mono text-[10px] text-gray-500 mb-1 opacity-70">
+                  {msg.role === "user" ? "YOU" : "AGENT COSMAS"}
+                </div>
+                <div 
+                  className={`p-4 max-w-[85%] font-mono text-sm leading-relaxed ${
+                    msg.role === "user" 
+                      ? "bg-[#c8972a] text-black" 
+                      : "bg-[#c8972a]/5 border border-[#c8972a]/30 text-white"
+                  }`}
+                >
+                  <div dangerouslySetInnerHTML={{ __html: (msg.text || "").replace(/\n/g, '<br/>') }} />
+                </div>
+              </div>
+            ))}
+            {isAsking && (
+               <div className="font-mono text-xs text-[#c8972a] animate-pulse mt-4">
+                  Agent Cosmas is analyzing records...
+               </div>
+            )}
+	    <div ref={messagesEndRef} />
+          </div>
+        )}
+
+        {/* Input Area */}
         <textarea
           value={userQuestion}
           onChange={(e) => setUserQuestion(e.target.value)}
-          placeholder="Ask a question about your eligibility results..."
-          className="w-full bg-background border border-border p-3 font-mono text-sm text-foreground focus:border-primary outline-none"
-          rows={3}
-        />
-        <button
-          onClick={handleAsk}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              handleAsk();
+            }
+          }}
+          placeholder="Ask a question about your eligibility results... (Press Enter to send)"
+          className="w-full bg-[#111] border border-[#333] p-3 font-mono text-sm text-white focus:border-[#c8972a] outline-none resize-y min-h-[80px]"
           disabled={isAsking}
-          className="mt-4 font-mono text-xs px-6 py-2 bg-primary text-primary-foreground hover:bg-foreground transition-colors"
-        >
-          {isAsking ? "ANALYZING..." : "SUBMIT QUERY →"}
-        </button>
-
-        {aiResponse && (
-          <div className="mt-6 p-4 bg-primary/5 border-l-2 border-primary font-mono text-sm text-foreground" dangerouslySetInnerHTML={{ __html: aiResponse }}/>
-        )}
+        />
+        <div className="flex justify-between items-center mt-4">
+          <button
+            onClick={handleAsk}
+            disabled={isAsking || !userQuestion.trim()}
+            className="font-mono text-xs px-6 py-2 bg-[#c8972a] text-black hover:bg-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-bold"
+          >
+            {isAsking ? "ANALYZING..." : "SUBMIT QUERY →"}
+          </button>
+          
+          {history.length > 0 && (
+            <button 
+              onClick={() => {
+                sessionStorage.removeItem(`chat_history_${caseNumber}`);
+                setHistory([]);
+              }}
+              className="font-mono text-[10px] text-gray-500 hover:text-red-400 transition-colors"
+            >
+              [ CLEAR TRANSCRIPT ]
+            </button>
+          )}
+        </div>
       </div>
       
       {/* Disclaimer */}
-      <div className="bg-card border border-border p-5 mb-8">
-        <div className="font-mono text-xs text-primary tracking-widest mb-2">AGENT COSMAS / CASE NOTES</div>
-        <GoldRule className="mb-3" />
-        <p className="font-mono text-xs text-muted-foreground leading-relaxed">
-          This determination is based on federal program guidelines and the evidence you provided. Actual eligibility is determined by the issuing agency and may vary by state, local rules, or changes in circumstances. This is not legal or financial advice. Contact 211 (dial 2-1-1) or BenefitsCheckUp.org for further assistance.
+      <div className="bg-[#1a1a1a] border border-[#333] p-5 mb-8 mt-8">
+        <div className="font-mono text-xs text-[#c8972a] tracking-widest mb-2">AGENT COSMAS / CASE NOTES</div>
+        <div className="w-full h-[1px] bg-[#c8972a] mb-3 opacity-30" />
+        <p className="font-mono text-xs text-gray-400 leading-relaxed">
+          This determination is based on federal program guidelines and the evidence you provided. Actual eligibility is determined by the issuing agency and may vary by state, local rules, or changes in circumstances. This is not legal or financial advice.
         </p>
       </div>
 
@@ -1396,20 +1500,20 @@ function Verdict({
       <div className="flex flex-col sm:flex-row gap-4">
         <button
           onClick={onRestart}
-          className="font-mono text-sm px-8 py-4 bg-primary text-primary-foreground tracking-widest hover:bg-foreground transition-colors duration-200 flex items-center gap-3"
+          className="font-mono text-sm px-8 py-4 bg-[#c8972a] text-black tracking-widest hover:bg-white transition-colors duration-200 flex items-center justify-center font-bold"
         >
           OPEN NEW CASE →
         </button>
         <button
           onClick={() => window.print()}
-          className="font-mono text-sm px-8 py-4 border border-border text-muted-foreground tracking-widest hover:border-primary/40 hover:text-foreground transition-colors duration-200"
+          className="font-mono text-sm px-8 py-4 border border-[#333] text-gray-400 tracking-widest hover:border-[#c8972a]/40 hover:text-white transition-colors duration-200"
         >
           PRINT REPORT
         </button>
       </div>
 
-      <GoldRule className="mt-10" />
-      <div className="mt-4 font-mono text-xs text-muted-foreground">
+      <div className="w-full h-[2px] bg-[#c8972a] mt-10 opacity-50" />
+      <div className="mt-4 font-mono text-xs text-gray-500">
         Case #{caseNumber} closed. No data was stored.
       </div>
     </div>
