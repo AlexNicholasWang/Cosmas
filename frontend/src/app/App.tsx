@@ -1197,8 +1197,6 @@ function Processing({ onDone }: { onDone: () => void }) {
     } else {
       const t = setTimeout(onDone, 100);
       return () => clearTimeout(t);
-
-      return () => clearInterval(checkStorageInterval);
     }
   }, [stepIdx, steps.length, onDone]);
 
@@ -1433,8 +1431,8 @@ function Verdict({
                 <div 
                   className={`p-4 max-w-[85%] font-mono text-sm leading-relaxed ${
                     msg.role === "user" 
-                      ? "bg-[#c8972a] text-black" 
-                      : "bg-[#c8972a]/5 border border-[#c8972a]/30 text-white"
+                      ? "bg-[#c8972a] text-black [&_a]:text-blue-900 [&_a]:underline [&_a]:font-bold [&_a]:hover:opacity-80 [&_a]:cursor-pointer [&_a]:transition-opacity" 
+                      : "bg-[#c8972a]/5 border border-[#c8972a]/30 text-white [&_a]:text-blue-400 [&_a]:underline [&_a]:cursor-pointer [&_a]:hover:text-blue-300 [&_a]:transition-colors [&_a]:font-semibold"
                   }`}
                 >
                   <div dangerouslySetInnerHTML={{ __html: (msg.text || "").replace(/\n/g, '<br/>') }} />
@@ -1446,7 +1444,7 @@ function Verdict({
                   Agent Cosmas is analyzing records...
                </div>
             )}
-	    <div ref={messagesEndRef} />
+            <div ref={messagesEndRef} />
           </div>
         )}
 
@@ -1571,6 +1569,7 @@ export default function App() {
       console.error("Error calling Gemini:", error);
     }
   };
+  
   return (
     <div
       className="min-h-screen bg-background"
@@ -1617,8 +1616,7 @@ export default function App() {
           vertical={vertical}
           programs={programs}
           onRestart={handleRestart}
-          geminiAnswer={geminiAnswer}
-	  onAskAI={runGeminiAnalysis}
+          answers={answers}
         />
       )}
     </div>
