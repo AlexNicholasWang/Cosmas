@@ -1533,6 +1533,7 @@ export default function App() {
   const handleVerticalSelect = (v: Vertical) => {
     setVertical(v);
     setStep("questions");
+    sessionStorage.clear();
   };
 
   const handleQuestionsComplete = (a: Record<string, string>) => {
@@ -1552,6 +1553,7 @@ export default function App() {
     setAnswers({});
     setPrograms([]);
     setStep("landing");
+    sessionStorage.clear();
   };
 
   const runGeminiAnalysis = async (userQuestion: string) => {
