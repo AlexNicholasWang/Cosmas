@@ -1429,7 +1429,7 @@ function Verdict({
                   {msg.role === "user" ? "YOU" : "AGENT COSMAS"}
                 </div>
                 <div 
-                  className={`p-4 max-w-[85%] font-mono text-sm leading-relaxed ${
+                  className={`p-4 max-w-[85%] font-mono text-sm leading-relaxed [&_h1]:font-serif [&_h1]:text-xl [&_h1]:font-bold [&_h1]:mt-3 [&_h1]:mb-2 [&_h2]:font-serif [&_h2]:text-lg [&_h2]:font-bold [&_h2]:mt-2 [&_h2]:mb-1 [&_h3]:font-serif [&_h3]:text-base [&_h3]:font-semibold [&_h3]:mt-2 [&_h3]:mb-1 [&_strong]:font-bold [&_em]:italic ${
                     msg.role === "user" 
                       ? "bg-[#c8972a] text-black [&_a]:text-blue-900 [&_a]:underline [&_a]:font-bold [&_a]:hover:opacity-80 [&_a]:cursor-pointer [&_a]:transition-opacity" 
                       : "bg-[#c8972a]/5 border border-[#c8972a]/30 text-white [&_a]:text-blue-400 [&_a]:underline [&_a]:cursor-pointer [&_a]:hover:text-blue-300 [&_a]:transition-colors [&_a]:font-semibold"
