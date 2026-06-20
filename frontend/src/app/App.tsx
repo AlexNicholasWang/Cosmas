@@ -860,7 +860,7 @@ const PROGRAM_FACTS = [
   { vertical: "housing", program: "HUD-VASH (Veterans Assistance)", text: "Even if a veteran was dishonorably discharged, they may still be eligible for HUD-VASH assistance depending on specific clinical determinations made by the VA." },
   { vertical: "housing", program: "USDA Rural Housing Service", text: "The USDA doesn't just manage farming and food; its Section 502 Direct Loan program lets low-income rural Americans buy homes with $0 down payments." },
   { vertical: "housing", program: "USDA Rural Housing Service", text: "What qualifies as 'rural' can be surprising; many suburban communities and towns right outside major metropolitan areas with populations under 35,000 fall within USDA boundaries." },
-  { vertical: "housing", program: "USDA Rural Housing Service", text: "The program features a 'Mutual Self-Help' grant where groups of neighbors team up to build each other’s houses, providing 'sweat equity' instead of a financial down payment." },
+  { vertical: "housing", program: "USDA Rural Housing Service", text: "The program features a 'Mutual Self-Help' grant where groups of neighbors team up to build each other's houses, providing 'sweat equity' instead of a financial down payment." },
   { vertical: "housing", program: "HOME Tenant-Based Rental Assistance", text: "The HOME Investment Partnerships Program is the largest federal block grant given to state and local governments designed exclusively to create affordable housing for low-income households." },
   { vertical: "housing", program: "HOME Tenant-Based Rental Assistance", text: "Unlike standard Section 8 vouchers, HOME rental assistance can be highly customized by your local city council to target specific local crises, like supporting young adults aging out of foster care." },
   { vertical: "housing", program: "HOME Tenant-Based Rental Assistance", text: "HOME assistance funds can be used not just for monthly rent, but also to cover security deposits and utility deposits, which are often the biggest barriers to securing a lease." },
@@ -949,6 +949,45 @@ function CaseTag({ number }: { number: string }) {
     </div>
   );
 }
+
+// ─── Copy Eligible Programs Button ────────────────────────────────────────────
+
+interface CopyEligibleButtonProps {
+  programs: Program[];
+}
+
+const CopyEligibleButton: FC<CopyEligibleButtonProps> = ({ programs }) => {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    const eligibleText = programs
+      .map((p) => {
+        return `${p.name}\n${p.agency}\n${p.description}\n\nWhy eligible: ${p.reason}\n`;
+      })
+      .join("\n---\n\n");
+
+    try {
+      await navigator.clipboard.writeText(eligibleText);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (error) {
+      console.error("Failed to copy:", error);
+    }
+  };
+
+  return (
+    <button
+      onClick={handleCopy}
+      className={`font-mono text-xs px-3 py-1.5 tracking-widest transition-all duration-200 flex items-center gap-2 ${
+        copied
+          ? "bg-green-600 text-white"
+          : "border border-[#c8972a]/40 text-[#c8972a] hover:bg-[#c8972a]/10"
+      }`}
+    >
+      {copied ? "✓ COPIED" : "COPY ALL"}
+    </button>
+  );
+};
 
 // ─── Landing ──────────────────────────────────────────────────────────────────
 
@@ -1447,7 +1486,10 @@ function Verdict({
           {/* Eligible programs */}
           {eligible.length > 0 && (
             <div className="mb-10">
-              <div className="font-mono text-xs text-[#c8972a] tracking-widest mb-4">AUTHORIZED PROGRAMS ({eligible.length})</div>
+              <div className="flex items-center justify-between mb-4">
+                <div className="font-mono text-xs text-[#c8972a] tracking-widest">AUTHORIZED PROGRAMS ({eligible.length})</div>
+                <CopyEligibleButton programs={eligible} />
+              </div>
               <div className="space-y-3">
                 {eligible.map((p) => (
                   <div key={p.name} className="bg-[#1a1a1a] border border-[#333] p-5 group hover:border-[#c8972a]/30 transition-colors duration-200">
