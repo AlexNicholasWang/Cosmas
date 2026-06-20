@@ -822,6 +822,74 @@ const VERTICAL_META = {
   },
 };
 
+// ─── Fun Facts Data ───────────────────────────────────────────────────────────
+
+const PROGRAM_FACTS = [
+  { vertical: "medical", program: "Medicaid", text: "Medicaid was signed into law on July 30, 1965, by President Lyndon B. Johnson as part of his 'Great Society' initiatives, right alongside Medicare." },
+  { vertical: "medical", program: "Medicaid", text: "While funded partially by the federal government, Medicaid is actually run individually by each state, meaning it goes by different names like 'Medi-Cal' in California or 'TennCare' in Tennessee." },
+  { vertical: "medical", program: "Medicaid", text: "Medicaid is the single largest source of funding for health-related services for children and long-term care for older adults in the United States." },
+  { vertical: "medical", program: "Children's Health Insurance Program (CHIP)", text: "CHIP was created in 1997 through a rare, highly successful bipartisan effort led by Democratic Senator Ted Kennedy and Republican Senator Orrin Hatch." },
+  { vertical: "medical", program: "Children's Health Insurance Program (CHIP)", text: "Before it was signed into federal law, the program was heavily inspired by 'Caring for Children,' a successful regional initiative launched by Blue Cross of Western Pennsylvania." },
+  { vertical: "medical", program: "Children's Health Insurance Program (CHIP)", text: "CHIP covers not just basic doctor visits, but also comprehensive dental and vision care, which are often left out of standard private adult health insurance plans." },
+  { vertical: "medical", program: "ACA Marketplace Subsidies", text: "The Affordable Care Act (ACA), which established these subsidies, famously survived multiple major Supreme Court challenges and over 50 congressional repeal votes." },
+  { vertical: "medical", program: "ACA Marketplace Subsidies", text: "Marketplace subsidies are officially distributed as 'Advanced Premium Tax Credits,' meaning the government sends the tax credit directly to your insurance company every month instead of making you wait until tax season." },
+  { vertical: "medical", program: "ACA Marketplace Subsidies", text: "Because of these subsidies, millions of Americans qualify for plans with premiums as low as $0 per month, depending on their income and location." },
+  { vertical: "medical", program: "Medicare Savings Programs", text: "There are actually four different types of Medicare Savings Programs (QMB, SLMB, QI, and QDWI), each acting like a specific financial shield to cover different gaps in Medicare costs." },
+  { vertical: "medical", program: "Medicare Savings Programs", text: "If you qualify for the QMB tier, doctors are legally prohibited from billing you for Medicare deductibles, copayments, and coinsurance." },
+  { vertical: "medical", program: "Medicare Savings Programs", text: "Applying for a Medicare Savings Program in many states automatically tests your eligibility for other low-income benefits, essentially serving as a dual-application shortcut." },
+  { vertical: "medical", program: "Extra Help (Part D Low-Income Subsidy)", text: "The Extra Help program is estimated to be worth about $5,900 per year in prescription drug savings for the average person who qualifies." },
+  { vertical: "medical", program: "Extra Help (Part D Low-Income Subsidy)", text: "Once approved for Extra Help, you face absolutely no late-enrollment penalties for Medicare Part D, even if you missed your initial sign-up window years prior." },
+  { vertical: "medical", program: "Extra Help (Part D Low-Income Subsidy)", text: "The program allows beneficiaries to switch their Medicare prescription drug plans once per quarter during the first nine months of the year, providing incredible flexibility compared to the standard annual window." },
+  { vertical: "medical", program: "Medicaid Maternity Coverage", text: "Because of expanded federal rules, Medicaid covers nearly 40% of all births in the United States, making it the nation's primary builder of modern maternity care." },
+  { vertical: "medical", program: "Medicaid Maternity Coverage", text: "While standard Medicaid has strict immigration requirements, federal emergency provisions allow undocumented pregnant individuals to receive Medicaid coverage for labor and delivery services in every state." },
+  { vertical: "medical", program: "Medicaid Maternity Coverage", text: "Under recent extensions, postpartum coverage has been expanded from just 60 days to a full 12 months after giving birth in the vast majority of U.S. states." },
+  { vertical: "housing", program: "Section 8 Housing Choice Voucher", text: "The nickname 'Section 8' comes directly from Section 8 of the Housing Act of 1937, which was heavily modified in 1974 to create the voucher program we know today." },
+  { vertical: "housing", program: "Section 8 Housing Choice Voucher", text: "Unlike public housing units, Section 8 vouchers are entirely portable; you can legally take your voucher and move to any other city or state in the U.S. that has a housing authority." },
+  { vertical: "housing", program: "Section 8 Housing Choice Voucher", text: "Some local housing authorities allow families to use their Section 8 vouchers toward a monthly mortgage payment instead of rent, turning it into a homeownership assistance tool." },
+  { vertical: "housing", program: "Emergency Rental Assistance (ERA)", text: "The ERA program was launched during the COVID-19 pandemic and represents the largest single investment in rent relief in United States history, allocating over $46 billion." },
+  { vertical: "housing", program: "Emergency Rental Assistance (ERA)", text: "To get money to people as fast as possible, ERA allowed tenants to 'self-certify' their financial hardship if they didn't have access to standard tax or wage documents." },
+  { vertical: "housing", program: "Emergency Rental Assistance (ERA)", text: "Unlike most rental aid programs which only pay future rent, ERA was uniquely structured to wipe out up to 12 to 18 months of past-due utility bills and back-rent simultaneously." },
+  { vertical: "housing", program: "HUD Public Housing", text: "The nation's first federal public housing complex, First Houses, opened in New York City's East Village in 1935 and was dedicated by First Lady Eleanor Roosevelt." },
+  { vertical: "housing", program: "HUD Public Housing", text: "Public housing is not just high-rise buildings; it includes townhouses, scattered single-family homes, and garden apartments, spanning over 1 million units across the country." },
+  { vertical: "housing", program: "HUD Public Housing", text: "Many historic public housing communities have produced major cultural icons; for example, musicians Jay-Z and Mary J. Blige famously grew up in New York public housing complexes." },
+  { vertical: "housing", program: "HUD CoC Homeless Assistance", text: "The Continuum of Care (CoC) model relies on an event called the 'Point-in-Time (PIT) Count,' where thousands of volunteers across America go out on a single winter night to count every person experiencing homelessness." },
+  { vertical: "housing", program: "HUD CoC Homeless Assistance", text: "CoC programs pioneered the 'Housing First' approach, demonstrating that providing permanent housing immediately, without making sobriety or employment a prerequisite, drastically improves long-term stability." },
+  { vertical: "housing", program: "HUD CoC Homeless Assistance", text: "A CoC is not a government building, but a local collaborative network that forces nonprofits, city governments, and local businesses to merge their data into a single unified tracking system." },
+  { vertical: "housing", program: "HUD-VASH (Veterans Assistance)", text: "The HUD-VASH program is a unique inter-agency alliance where HUD provides the rental voucher, but the Department of Veterans Affairs (VA) provides clinical case management and healthcare." },
+  { vertical: "housing", program: "HUD-VASH (Veterans Assistance)", text: "Since 2008, HUD-VASH has successfully housed more than 100,000 homeless veterans, contributing to an over 50% drop in veteran homelessness nationwide." },
+  { vertical: "housing", program: "HUD-VASH (Veterans Assistance)", text: "Even if a veteran was dishonorably discharged, they may still be eligible for HUD-VASH assistance depending on specific clinical determinations made by the VA." },
+  { vertical: "housing", program: "USDA Rural Housing Service", text: "The USDA doesn't just manage farming and food; its Section 502 Direct Loan program lets low-income rural Americans buy homes with $0 down payments." },
+  { vertical: "housing", program: "USDA Rural Housing Service", text: "What qualifies as 'rural' can be surprising; many suburban communities and towns right outside major metropolitan areas with populations under 35,000 fall within USDA boundaries." },
+  { vertical: "housing", program: "USDA Rural Housing Service", text: "The program features a 'Mutual Self-Help' grant where groups of neighbors team up to build each other’s houses, providing 'sweat equity' instead of a financial down payment." },
+  { vertical: "housing", program: "HOME Tenant-Based Rental Assistance", text: "The HOME Investment Partnerships Program is the largest federal block grant given to state and local governments designed exclusively to create affordable housing for low-income households." },
+  { vertical: "housing", program: "HOME Tenant-Based Rental Assistance", text: "Unlike standard Section 8 vouchers, HOME rental assistance can be highly customized by your local city council to target specific local crises, like supporting young adults aging out of foster care." },
+  { vertical: "housing", program: "HOME Tenant-Based Rental Assistance", text: "HOME assistance funds can be used not just for monthly rent, but also to cover security deposits and utility deposits, which are often the biggest barriers to securing a lease." },
+  { vertical: "financial", program: "SNAP (Food Stamps)", text: "The first food stamp recipient in 1939 was Mabel McFiggan of Rochester, New York; the first thing she bought with her stamps was a pack of butter." },
+  { vertical: "financial", program: "SNAP (Food Stamps)", text: "Food 'stamps' haven't actually been stamps since the late 1990s and early 2000s, when the program fully transitioned to Electronic Benefits Transfer (EBT) plastic cards." },
+  { vertical: "financial", program: "SNAP (Food Stamps)", text: "Under specific federal rules, you can use SNAP benefits to buy seeds and food-producing plants, allowing families to grow their own groceries." },
+  { vertical: "financial", program: "Supplemental Security Income (SSI)", text: "Though administered by the Social Security Administration, SSI is not funded by Social Security taxes; it is entirely funded by general U.S. Treasury tax revenues." },
+  { vertical: "financial", program: "Supplemental Security Income (SSI)", text: "SSI was signed into law by President Richard Nixon in 1972 to replace a messy patchwork of separate state programs for the blind, aged, and disabled." },
+  { vertical: "financial", program: "Supplemental Security Income (SSI)", text: "Children with severe disabilities can qualify for SSI payments independently of their parents' work history, focusing strictly on the household's financial need." },
+  { vertical: "financial", program: "Earned Income Tax Credit (EITC)", text: "The EITC was originally introduced in 1975 as a temporary 'work bonus' program to offset the burden of Social Security taxes on low-income working families." },
+  { vertical: "financial", program: "Earned Income Tax Credit (EITC)", text: "The EITC is widely considered by economists to be one of the most effective anti-poverty programs in the United States, lifting millions of people out of poverty every single year." },
+  { vertical: "financial", program: "Earned Income Tax Credit (EITC)", text: "The amount of EITC you receive scales upward with the number of children you have, maxing out once you have three or more qualifying dependents." },
+  { vertical: "financial", program: "TANF (Temporary Assistance for Needy Families)", text: "TANF was created in 1996 under President Bill Clinton's welfare reform bill, completely replacing the decades-old 'Aid to Families with Dependent Children' (AFDC) program." },
+  { vertical: "financial", program: "TANF (Temporary Assistance for Needy Families)", text: "Federal law sets a strict lifetime maximum of 60 months (5 years) for receiving TANF cash assistance, though states can choose to make those limits even shorter." },
+  { vertical: "financial", program: "TANF (Temporary Assistance for Needy Families)", text: "TANF funds don't just go toward direct cash payments; states use block grants to fund local initiatives like subsidized childcare and job-readiness bootcamps." },
+  { vertical: "financial", program: "LIHEAP (Energy Assistance)", text: "LIHEAP doesn't just assist with heating in the freezing winter; it also provides critical emergency 'cooling' assistance for air conditioning costs in scorching summer climates." },
+  { vertical: "financial", program: "LIHEAP (Energy Assistance)", text: "In addition to paying utility bills, LIHEAP funds can be used for 'crisis weatherization,' which covers immediate repairs like fixing a broken furnace or sealing drafty windows." },
+  { vertical: "financial", program: "LIHEAP (Energy Assistance)", text: "LIHEAP prioritizes households with high energy burdens relative to their income, meaning a large portion of the funding goes to families with children under five and households with elderly members." },
+  { vertical: "financial", program: "Unemployment Insurance (UI)", text: "Wisconsin was the trailblazer for this program, enacting the first state unemployment compensation law in 1932, three years before the federal government followed suit." },
+  { vertical: "financial", program: "Unemployment Insurance (UI)", text: "The system is funded almost entirely by insurance taxes paid by employers, not by deductions taken out of the workers' paychecks." },
+  { vertical: "financial", program: "Unemployment Insurance (UI)", text: "During historical economic downturns, Congress can pass emergency measures to trigger 'Extended Benefits' (EB), stretching weekly UI checks far past the standard 26-week limit." },
+  { vertical: "financial", program: "VA Financial Assistance", text: "The United States has been providing financial support to veterans all the way back to 1636, when the Pilgrims of Plymouth Colony passed a law to support disabled soldiers." },
+  { vertical: "financial", program: "VA Financial Assistance", text: "The iconic GI Bill, passed in 1944, completely transformed the American economy by helping millions of WWII veterans buy homes and attend college risk-free." },
+  { vertical: "financial", program: "VA Financial Assistance", text: "The VA offers a special tax-free benefit called 'Aid and Attendance' that adds extra monthly cash to a veteran's pension if they need help with daily tasks like dressing or cooking." },
+  { vertical: "financial", program: "Child Tax Credit (CTC)", text: "When it was first introduced in 1997, the Child Tax Credit was worth just $400 per child; over the years, expansions have significantly increased that value." },
+  { vertical: "financial", program: "Child Tax Credit (CTC)", text: "The credit is 'partially refundable' via the Additional Child Tax Credit, meaning you can get money back as a tax refund even if your federal income tax liability is zero." },
+  { vertical: "financial", program: "Child Tax Credit (CTC)", text: "In 2021, the program underwent a historic temporary change where the IRS distributed half of the credit as direct monthly cash deposits throughout the summer and fall." }
+];
+
 // ─── Typewriter hook ──────────────────────────────────────────────────────────
 
 function useTypewriter(text: string, speed = 18, active = true) {
@@ -1228,6 +1296,31 @@ function Processing({ onDone }: { onDone: () => void }) {
   );
 }
 
+// ─── Fact Flashcard Component ─────────────────────────────────────────────────
+
+function FactFlashcard({ programName }: { programName: string }) {
+  // Filter facts for this specific program
+  const facts = PROGRAM_FACTS.filter((f) => f.program === programName);
+  
+  if (facts.length === 0) return null;
+
+  // Grab a consistent pseudo-random fact based on the length to prevent jumping on re-renders
+  const selectedFact = facts[Math.floor(programName.length % facts.length)];
+
+  return (
+    <div className="bg-[#1a1a1a] border border-[#c8972a]/30 p-4 mb-4 relative overflow-hidden group hover:border-[#c8972a] transition-colors duration-300">
+      <div className="absolute -top-4 -right-4 w-12 h-12 bg-[#c8972a]/5 rounded-full flex items-center justify-center font-mono text-xl text-[#c8972a]/20 font-bold group-hover:bg-[#c8972a]/10 transition-colors">
+        ?
+      </div>
+      <div className="font-mono text-[10px] text-[#c8972a] tracking-widest mb-1 uppercase">FUN FACT</div>
+      <div className="font-serif text-sm text-white font-bold mb-2">{programName}</div>
+      <p className="font-mono text-xs text-gray-400 leading-relaxed z-10 relative">
+        "{selectedFact.text}"
+      </p>
+    </div>
+  );
+}
+
 // ─── Verdict ──────────────────────────────────────────────────────────────────
 
 function Verdict({
@@ -1246,26 +1339,21 @@ function Verdict({
   const [userQuestion, setUserQuestion] = useState("");
   const [isAsking, setIsAsking] = useState(false);
   
-  // Initialize from sessionStorage to survive page reloads
   const [history, setHistory] = useState<ChatTurn[]>(() => {
     const saved = sessionStorage.getItem(`chat_history_${caseNumber}`);
     return saved ? JSON.parse(saved) : [];
   });
 
-  // 1. Create a reference to the bottom of the chat
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // 2. Function to smoothly scroll to that reference
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // 3. Trigger the scroll whenever history changes or Agent Cosmas starts typing
   useEffect(() => {
     scrollToBottom();
   }, [history, isAsking]);
 
-  // Sync to sessionStorage on every history update
   useEffect(() => {
     sessionStorage.setItem(`chat_history_${caseNumber}`, JSON.stringify(history));
   }, [history, caseNumber]);
@@ -1277,28 +1365,18 @@ function Verdict({
     setUserQuestion("");
     setIsAsking(true);
 
-    // Optimistically show user's message in UI
     setHistory((prev) => [...prev, { role: "user", text: currentQuestion }]);
 
     try {
       let data;
-      
-      // BRANCH 1: First interaction (uses submitPrompt for context injection)
       if (history.length === 0) {
         const userDataString = `User Context: ${JSON.stringify(answers)}. User Question: ${currentQuestion}`;
         data = await submitPrompt(userDataString, vertical);
-      } 
-      // BRANCH 2: Subsequent interactions (uses stateless multi-turn submitChat)
-      else {
+      } else {
         data = await submitChat(history, vertical, currentQuestion);
       }
 
-      // 🛠️ FIX: Handle the difference between the two endpoints
-      // If it's a string (from /api/prompt), use it directly. 
-      // If it's an object (from /api/chat), extract .response.
       const modelText = typeof data === "string" ? data : data?.response;
-
-      // Update state with Gemini's response
       setHistory((prev) => [...prev, { role: "model", text: modelText || "No response received." }]);
 
     } catch (error: any) {
@@ -1318,201 +1396,223 @@ function Verdict({
   const immediate = eligible.filter((p) => p.urgency === "immediate");
 
   return (
-    <div className="min-h-screen bg-background flex flex-col p-8 md:p-16 max-w-5xl mx-auto w-full">
-      <div className="w-full h-[2px] bg-[#c8972a] mb-6 opacity-50" />
-      <div className="mt-6 mb-2 font-mono text-xs text-[#c8972a] tracking-widest uppercase">
-        CASE #{caseNumber} / {vertical} FILE / VERDICT
-      </div>
-
-      {/* Verdict stamp */}
-      <div className="mt-6 mb-8 flex items-start gap-8">
-        <div>
-          <div
-            className="inline-block border-4 px-6 py-3 font-mono font-bold text-2xl md:text-3xl tracking-widest mb-4 rotate-[-2deg]"
-            style={{
-              borderColor: hasEligible ? "#c8972a" : "#8b2020",
-              color: hasEligible ? "#c8972a" : "#8b2020",
-            }}
-          >
-            {hasEligible ? "ELIGIBLE" : "INELIGIBLE"}
+    <div className="min-h-screen bg-background flex flex-col p-8 md:p-16 max-w-7xl mx-auto w-full">
+      <div className="flex flex-col lg:flex-row gap-12">
+        
+        {/* Left Side: Main Investigation Report */}
+        <div className="flex-1">
+          <div className="w-full h-[2px] bg-[#c8972a] mb-6 opacity-50" />
+          <div className="mt-6 mb-2 font-mono text-xs text-[#c8972a] tracking-widest uppercase">
+            CASE #{caseNumber} / {vertical} FILE / VERDICT
           </div>
-          <h2 className="font-serif text-3xl md:text-4xl text-foreground font-bold leading-tight">
-            {hasEligible
-              ? `${eligible.length} program${eligible.length > 1 ? "s" : ""} found for your case.`
-              : "No matching programs identified."}
-          </h2>
-          {hasEligible && (
-            <p className="font-mono text-sm text-gray-400 mt-3 max-w-xl">
-              The evidence supports eligibility for the programs listed below. Each case is unique — contact the relevant agency to confirm and apply.
-            </p>
+
+          {/* Verdict stamp */}
+          <div className="mt-6 mb-8 flex items-start gap-8">
+            <div>
+              <div
+                className="inline-block border-4 px-6 py-3 font-mono font-bold text-2xl md:text-3xl tracking-widest mb-4 rotate-[-2deg]"
+                style={{
+                  borderColor: hasEligible ? "#c8972a" : "#8b2020",
+                  color: hasEligible ? "#c8972a" : "#8b2020",
+                }}
+              >
+                {hasEligible ? "ELIGIBLE" : "INELIGIBLE"}
+              </div>
+              <h2 className="font-serif text-3xl md:text-4xl text-foreground font-bold leading-tight">
+                {hasEligible
+                  ? `${eligible.length} program${eligible.length > 1 ? "s" : ""} found for your case.`
+                  : "No matching programs identified."}
+              </h2>
+              {hasEligible && (
+                <p className="font-mono text-sm text-gray-400 mt-3 max-w-xl">
+                  The evidence supports eligibility for the programs listed below. Each case is unique — contact the relevant agency to confirm and apply.
+                </p>
+              )}
+            </div>
+          </div>
+
+          <div className="w-full h-[2px] bg-[#c8972a] mb-8 opacity-50" />
+
+          {/* Immediate action banner */}
+          {immediate.length > 0 && (
+            <div className="border border-[#c8972a]/40 bg-[#c8972a]/5 p-4 mb-8 flex items-start gap-3">
+              <span className="text-[#c8972a] font-mono text-sm shrink-0">!</span>
+              <div className="font-mono text-xs text-foreground">
+                <span className="text-[#c8972a] font-bold">PRIORITY ACTION: </span>
+                {immediate.map((p) => p.name).join(", ")} — Apply as soon as possible for immediate assistance.
+              </div>
+            </div>
           )}
-        </div>
-      </div>
 
-      <div className="w-full h-[2px] bg-[#c8972a] mb-8 opacity-50" />
-
-      {/* Immediate action banner */}
-      {immediate.length > 0 && (
-        <div className="border border-[#c8972a]/40 bg-[#c8972a]/5 p-4 mb-8 flex items-start gap-3">
-          <span className="text-[#c8972a] font-mono text-sm shrink-0">!</span>
-          <div className="font-mono text-xs text-foreground">
-            <span className="text-[#c8972a] font-bold">PRIORITY ACTION: </span>
-            {immediate.map((p) => p.name).join(", ")} — Apply as soon as possible for immediate assistance.
-          </div>
-        </div>
-      )}
-
-      {/* Eligible programs */}
-      {eligible.length > 0 && (
-        <div className="mb-10">
-          <div className="font-mono text-xs text-[#c8972a] tracking-widest mb-4">AUTHORIZED PROGRAMS ({eligible.length})</div>
-          <div className="space-y-3">
-            {eligible.map((p) => (
-              <div key={p.name} className="bg-[#1a1a1a] border border-[#333] p-5 group hover:border-[#c8972a]/30 transition-colors duration-200">
-                <div className="flex items-start justify-between gap-4 mb-3">
-                  <div>
-                    <div className="flex items-center gap-3 mb-1">
-                      <span className="font-mono text-xs text-[#c8972a]">◆ ELIGIBLE</span>
-                      {p.urgency === "immediate" && (
-                        <span className="font-mono text-xs text-red-500 border border-red-500 px-2 py-0.5">PRIORITY</span>
-                      )}
+          {/* Eligible programs */}
+          {eligible.length > 0 && (
+            <div className="mb-10">
+              <div className="font-mono text-xs text-[#c8972a] tracking-widest mb-4">AUTHORIZED PROGRAMS ({eligible.length})</div>
+              <div className="space-y-3">
+                {eligible.map((p) => (
+                  <div key={p.name} className="bg-[#1a1a1a] border border-[#333] p-5 group hover:border-[#c8972a]/30 transition-colors duration-200">
+                    <div className="flex items-start justify-between gap-4 mb-3">
+                      <div>
+                        <div className="flex items-center gap-3 mb-1">
+                          <span className="font-mono text-xs text-[#c8972a]">◆ ELIGIBLE</span>
+                          {p.urgency === "immediate" && (
+                            <span className="font-mono text-xs text-red-500 border border-red-500 px-2 py-0.5">PRIORITY</span>
+                          )}
+                        </div>
+                        <h3 className="font-serif text-lg text-foreground font-bold">{p.name}</h3>
+                        <div className="font-mono text-xs text-gray-400">{p.agency}</div>
+                      </div>
                     </div>
-                    <h3 className="font-serif text-lg text-foreground font-bold">{p.name}</h3>
-                    <div className="font-mono text-xs text-gray-400">{p.agency}</div>
+                    <div className="w-full h-[1px] bg-[#c8972a] mb-3 opacity-30" />
+                    <p className="font-mono text-xs text-gray-400 mb-3 leading-relaxed">{p.description}</p>
+                    <div className="font-mono text-xs text-foreground">
+                      <span className="text-[#c8972a] mr-2">WHY:</span>{p.reason}
+                    </div>
                   </div>
-                </div>
-                <div className="w-full h-[1px] bg-[#c8972a] mb-3 opacity-30" />
-                <p className="font-mono text-xs text-gray-400 mb-3 leading-relaxed">{p.description}</p>
-                <div className="font-mono text-xs text-foreground">
-                  <span className="text-[#c8972a] mr-2">WHY:</span>{p.reason}
-                </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
-      )}
+            </div>
+          )}
 
-      {/* Ineligible programs */}
-      {ineligible.length > 0 && (
-        <div className="mb-10">
-          <div className="font-mono text-xs text-gray-500 tracking-widest mb-4">
-            REVIEWED — DID NOT QUALIFY ({ineligible.length})
-          </div>
-          <div className="space-y-2">
-            {ineligible.map((p) => (
-              <div key={p.name} className="bg-[#1a1a1a] border border-[#333] p-4 opacity-50">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <div className="font-mono text-xs text-gray-500 mb-1">✕ INELIGIBLE</div>
-                    <div className="font-serif text-sm text-foreground font-bold">{p.name}</div>
-                    <div className="font-mono text-xs text-gray-500 mt-1">{p.reason}</div>
+          {/* Ineligible programs */}
+          {ineligible.length > 0 && (
+            <div className="mb-10">
+              <div className="font-mono text-xs text-gray-500 tracking-widest mb-4">
+                REVIEWED — DID NOT QUALIFY ({ineligible.length})
+              </div>
+              <div className="space-y-2">
+                {ineligible.map((p) => (
+                  <div key={p.name} className="bg-[#1a1a1a] border border-[#333] p-4 opacity-50">
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <div className="font-mono text-xs text-gray-500 mb-1">✕ INELIGIBLE</div>
+                        <div className="font-serif text-sm text-foreground font-bold">{p.name}</div>
+                        <div className="font-mono text-xs text-gray-500 mt-1">{p.reason}</div>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
-      )}
+            </div>
+          )}
 
-      {/* Expanding Chat Section */}
-      <div className="mt-12 bg-[#1a1a1a] border border-[#c8972a]/20 p-6 flex flex-col">
-        <div className="font-mono text-xs text-[#c8972a] tracking-widest mb-4">
-          ASK AGENT COSMAS
-        </div>
+          {/* Expanding Chat Section */}
+          <div className="mt-12 bg-[#1a1a1a] border border-[#c8972a]/20 p-6 flex flex-col">
+            <div className="font-mono text-xs text-[#c8972a] tracking-widest mb-4">
+              ASK AGENT COSMAS
+            </div>
 
-        {/* Chat History Window */}
-        {history.length > 0 && (
-          <div className="mb-6 space-y-4 max-h-[600px] overflow-y-auto pr-2 flex-grow transition-all duration-300">
-            {history.map((msg, idx) => (
-              <div key={idx} className={`flex flex-col ${msg.role === "user" ? "items-end" : "items-start"}`}>
-                <div className="font-mono text-[10px] text-gray-500 mb-1 opacity-70">
-                  {msg.role === "user" ? "YOU" : "AGENT COSMAS"}
-                </div>
-                <div 
-                  className={`p-4 max-w-[85%] font-mono text-sm leading-relaxed [&_h1]:font-serif [&_h1]:text-xl [&_h1]:font-bold [&_h1]:mt-3 [&_h1]:mb-2 [&_h2]:font-serif [&_h2]:text-lg [&_h2]:font-bold [&_h2]:mt-2 [&_h2]:mb-1 [&_h3]:font-serif [&_h3]:text-base [&_h3]:font-semibold [&_h3]:mt-2 [&_h3]:mb-1 [&_strong]:font-bold [&_em]:italic ${
-                    msg.role === "user" 
-                      ? "bg-[#c8972a] text-black [&_a]:text-blue-900 [&_a]:underline [&_a]:font-bold [&_a]:hover:opacity-80 [&_a]:cursor-pointer [&_a]:transition-opacity" 
-                      : "bg-[#c8972a]/5 border border-[#c8972a]/30 text-white [&_a]:text-blue-400 [&_a]:underline [&_a]:cursor-pointer [&_a]:hover:text-blue-300 [&_a]:transition-colors [&_a]:font-semibold"
-                  }`}
-                >
-                  <div dangerouslySetInnerHTML={{ __html: (msg.text || "").replace(/\n/g, '<br/>') }} />
-                </div>
+            {/* Chat History Window */}
+            {history.length > 0 && (
+              <div className="mb-6 space-y-4 max-h-[600px] overflow-y-auto pr-2 flex-grow transition-all duration-300">
+                {history.map((msg, idx) => (
+                  <div key={idx} className={`flex flex-col ${msg.role === "user" ? "items-end" : "items-start"}`}>
+                    <div className="font-mono text-[10px] text-gray-500 mb-1 opacity-70">
+                      {msg.role === "user" ? "YOU" : "AGENT COSMAS"}
+                    </div>
+                    <div 
+                      className={`p-4 max-w-[85%] font-mono text-sm leading-relaxed [&_h1]:font-serif [&_h1]:text-xl [&_h1]:font-bold [&_h1]:mt-3 [&_h1]:mb-2 [&_h2]:font-serif [&_h2]:text-lg [&_h2]:font-bold [&_h2]:mt-2 [&_h2]:mb-1 [&_h3]:font-serif [&_h3]:text-base [&_h3]:font-semibold [&_h3]:mt-2 [&_h3]:mb-1 [&_strong]:font-bold [&_em]:italic ${
+                        msg.role === "user" 
+                          ? "bg-[#c8972a] text-black [&_a]:text-blue-900 [&_a]:underline [&_a]:font-bold [&_a]:hover:opacity-80 [&_a]:cursor-pointer [&_a]:transition-opacity" 
+                          : "bg-[#c8972a]/5 border border-[#c8972a]/30 text-white [&_a]:text-blue-400 [&_a]:underline [&_a]:cursor-pointer [&_a]:hover:text-blue-300 [&_a]:transition-colors [&_a]:font-semibold"
+                      }`}
+                    >
+                      <div dangerouslySetInnerHTML={{ __html: (msg.text || "").replace(/\n/g, '<br/>') }} />
+                    </div>
+                  </div>
+                ))}
+                {isAsking && (
+                   <div className="font-mono text-xs text-[#c8972a] animate-pulse mt-4">
+                      Agent Cosmas is analyzing records...
+                   </div>
+                )}
+                <div ref={messagesEndRef} />
               </div>
-            ))}
-            {isAsking && (
-               <div className="font-mono text-xs text-[#c8972a] animate-pulse mt-4">
-                  Agent Cosmas is analyzing records...
-               </div>
             )}
-            <div ref={messagesEndRef} />
+
+            {/* Input Area */}
+            <textarea
+              value={userQuestion}
+              onChange={(e) => setUserQuestion(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  handleAsk();
+                }
+              }}
+              placeholder="Ask a question about your eligibility results... (Press Enter to send)"
+              className="w-full bg-[#111] border border-[#333] p-3 font-mono text-sm text-white focus:border-[#c8972a] outline-none resize-y min-h-[80px]"
+              disabled={isAsking}
+            />
+            <div className="flex justify-between items-center mt-4">
+              <button
+                onClick={handleAsk}
+                disabled={isAsking || !userQuestion.trim()}
+                className="font-mono text-xs px-6 py-2 bg-[#c8972a] text-black hover:bg-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-bold"
+              >
+                {isAsking ? "ANALYZING..." : "SUBMIT QUERY →"}
+              </button>
+              
+              {history.length > 0 && (
+                <button 
+                  onClick={() => {
+                    sessionStorage.removeItem(`chat_history_${caseNumber}`);
+                    setHistory([]);
+                  }}
+                  className="font-mono text-[10px] text-gray-500 hover:text-red-400 transition-colors"
+                >
+                  [ CLEAR TRANSCRIPT ]
+                </button>
+              )}
+            </div>
+          </div>
+          
+          {/* Disclaimer */}
+          <div className="bg-[#1a1a1a] border border-[#333] p-5 mb-8 mt-8">
+            <div className="font-mono text-xs text-[#c8972a] tracking-widest mb-2">AGENT COSMAS / CASE NOTES</div>
+            <div className="w-full h-[1px] bg-[#c8972a] mb-3 opacity-30" />
+            <p className="font-mono text-xs text-gray-400 leading-relaxed">
+              This determination is based on federal program guidelines and the evidence you provided. Actual eligibility is determined by the issuing agency and may vary by state, local rules, or changes in circumstances. This is not legal or financial advice.
+            </p>
+          </div>
+
+          {/* Actions */}
+          <div className="flex flex-col sm:flex-row gap-4 no-print">
+            <button
+              onClick={onRestart}
+              className="font-mono text-sm px-8 py-4 bg-[#c8972a] text-black tracking-widest hover:bg-white transition-colors duration-200 flex items-center justify-center font-bold"
+            >
+              OPEN NEW CASE →
+            </button>
+            <button
+              onClick={() => window.print()}
+              className="font-mono text-sm px-8 py-4 border border-[#333] text-gray-400 tracking-widest hover:border-[#c8972a]/40 hover:text-white transition-colors duration-200"
+            >
+              PRINT REPORT
+            </button>
+          </div>
+
+          <div className="w-full h-[2px] bg-[#c8972a] mt-10 opacity-50" />
+          <div className="mt-4 font-mono text-xs text-gray-500">
+            Case #{caseNumber} closed. No data was stored.
+          </div>
+        </div>
+
+        {/* Right Margin: Fun Facts (only rendering if there are eligible programs) */}
+        {hasEligible && (
+          <div className="w-full lg:w-80 shrink-0 no-print mt-12 lg:mt-0 pt-6">
+            <div className="sticky top-8">
+              <div className="font-mono text-[10px] text-gray-500 tracking-widest mb-4">
+                SUPPLEMENTAL PROGRAM DATA
+              </div>
+              
+              {/* Maps over only the eligible programs to generate their specific flashcards */}
+              {eligible.map((program) => (
+                <FactFlashcard key={`fact-${program.name}`} programName={program.name} />
+              ))}
+            </div>
           </div>
         )}
-
-        {/* Input Area */}
-        <textarea
-          value={userQuestion}
-          onChange={(e) => setUserQuestion(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && !e.shiftKey) {
-              e.preventDefault();
-              handleAsk();
-            }
-          }}
-          placeholder="Ask a question about your eligibility results... (Press Enter to send)"
-          className="w-full bg-[#111] border border-[#333] p-3 font-mono text-sm text-white focus:border-[#c8972a] outline-none resize-y min-h-[80px]"
-          disabled={isAsking}
-        />
-        <div className="flex justify-between items-center mt-4">
-          <button
-            onClick={handleAsk}
-            disabled={isAsking || !userQuestion.trim()}
-            className="font-mono text-xs px-6 py-2 bg-[#c8972a] text-black hover:bg-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-bold"
-          >
-            {isAsking ? "ANALYZING..." : "SUBMIT QUERY →"}
-          </button>
-          
-          {history.length > 0 && (
-            <button 
-              onClick={() => {
-                sessionStorage.removeItem(`chat_history_${caseNumber}`);
-                setHistory([]);
-              }}
-              className="font-mono text-[10px] text-gray-500 hover:text-red-400 transition-colors"
-            >
-              [ CLEAR TRANSCRIPT ]
-            </button>
-          )}
-        </div>
-      </div>
-      
-      {/* Disclaimer */}
-      <div className="bg-[#1a1a1a] border border-[#333] p-5 mb-8 mt-8">
-        <div className="font-mono text-xs text-[#c8972a] tracking-widest mb-2">AGENT COSMAS / CASE NOTES</div>
-        <div className="w-full h-[1px] bg-[#c8972a] mb-3 opacity-30" />
-        <p className="font-mono text-xs text-gray-400 leading-relaxed">
-          This determination is based on federal program guidelines and the evidence you provided. Actual eligibility is determined by the issuing agency and may vary by state, local rules, or changes in circumstances. This is not legal or financial advice.
-        </p>
-      </div>
-
-      {/* Actions */}
-      <div className="flex flex-col sm:flex-row gap-4">
-        <button
-          onClick={onRestart}
-          className="font-mono text-sm px-8 py-4 bg-[#c8972a] text-black tracking-widest hover:bg-white transition-colors duration-200 flex items-center justify-center font-bold"
-        >
-          OPEN NEW CASE →
-        </button>
-        <button
-          onClick={() => window.print()}
-          className="font-mono text-sm px-8 py-4 border border-[#333] text-gray-400 tracking-widest hover:border-[#c8972a]/40 hover:text-white transition-colors duration-200"
-        >
-          PRINT REPORT
-        </button>
-      </div>
-
-      <div className="w-full h-[2px] bg-[#c8972a] mt-10 opacity-50" />
-      <div className="mt-4 font-mono text-xs text-gray-500">
-        Case #{caseNumber} closed. No data was stored.
       </div>
     </div>
   );
