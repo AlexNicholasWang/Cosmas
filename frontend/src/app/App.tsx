@@ -28,6 +28,7 @@ interface Program {
 interface ChatTurn {
   role: "user" | "model";
   text: string;
+  isHidden?: boolean;
 }
 
 // ─── California Counties Data ──────────────────────────────────────────────────
@@ -1104,7 +1105,7 @@ function Landing({ onStart, caseNumber }: { onStart: () => void; caseNumber: str
             <ul className="font-mono text-xs text-muted-foreground space-y-2">
               <li><span className="text-primary mr-2">▸</span>No account required. No login. No sign-up.</li>
               <li><span className="text-primary mr-2">▸</span>All answers exist only in this browser session.</li>
-              <li><span className="text-primary mr-2">▸</span>Nothing is stored, transmitted, or retained after you close this page.</li>
+              <li><span className="text-primary mr-2">▸</span>Nothing is retained after you close this page.</li>
               <li><span className="text-primary mr-2">▸</span>We never ask for your name, SSN, or contact information.</li>
             </ul>
           </div>
@@ -1441,10 +1442,7 @@ function Verdict({
   const [userQuestion, setUserQuestion] = useState("");
   const [isAsking, setIsAsking] = useState(false);
   
-  const [history, setHistory] = useState<ChatTurn[]>(() => {
-    const saved = sessionStorage.getItem(`chat_history_${caseNumber}`);
-    return saved ? JSON.parse(saved) : [];
-  });
+  const [history, setHistory] = useState<ChatTurn[]>([]);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -1462,20 +1460,40 @@ function Verdict({
 
   const handleAsk = async () => {
     if (!userQuestion.trim() || isAsking) return;
-    
+
     const currentQuestion = userQuestion;
     setUserQuestion("");
     setIsAsking(true);
 
+    // Add only the user's question to the visual UI
     setHistory((prev) => [...prev, { role: "user", text: currentQuestion }]);
 
     try {
       let data;
+      
+      // 1. Build the context string dynamically from your props
+      const formattedAnswers = Object.entries(answers || {})
+        .map(([key, value]) => `${key}: ${value}`)
+        .join("\n");
+
+      const formattedVerdict = programs.map(p => 
+        `Program: ${p.name}\nEligible: ${p.eligible}\nReason: ${p.reason}`
+      ).join("\n\n");
+
+      const contextText = `User Answers:\n${formattedAnswers}\n\nVerdict:\n${formattedVerdict}`;
+
+      // 2. Decide how to send it based on if it is the first question
       if (history.length === 0) {
-        const userDataString = `User Context: ${JSON.stringify(answers)}. User Question: ${currentQuestion}`;
+        // First turn: Use submitPrompt and append as one string
+        const userDataString = `${contextText}\n\nUser Question: ${currentQuestion}`;
         data = await submitPrompt(userDataString, vertical);
       } else {
-        data = await submitChat(history, vertical, currentQuestion);
+        // Subsequent turns: Append data as the first item in the JSON under role: "user"
+        const contextTurn = { role: "user", text: contextText };
+        
+        // Payload = [The Context Data] + [Previous Chat] 
+        const payloadForAPI = [contextTurn, ...history];
+        data = await submitChat(payloadForAPI, vertical, currentQuestion);
       }
 
       const modelText = typeof data === "string" ? data : data?.response;
@@ -1764,7 +1782,17 @@ export default function App() {
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [programs, setPrograms] = useState<Program[]>([]);
   const [geminiAnswer, setGeminiAnswer] = useState("");
+  useEffect(() => {
+    const handleTabClose = () => {
+      sessionStorage.clear();
+    };
 
+    window.addEventListener("beforeunload", handleTabClose);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleTabClose);
+    };
+  }, []);
   const handleVerticalSelect = (v: Vertical) => {
     setVertical(v);
     setStep("questions");
@@ -1777,10 +1805,13 @@ export default function App() {
   };
   
   const handleProcessingDone = () => {
-    if (!vertical) return;
-    const results = getEligibilityResults(vertical, answers);
-    setPrograms(results);
-    setStep("verdict");
+    let result: Program[] = [];
+    if (vertical === "healthcare") result = determineHealthcarePrograms(answers);
+    if (vertical === "housing") result = determineHousingPrograms(answers);
+    if (vertical === "financials") result = determineFinancialPrograms(answers);
+    
+    setPrograms(result);
+    setStep("verdict"); // Just set the programs and move to the verdict screen!
   };
 
   const handleRestart = () => {
