@@ -202,6 +202,8 @@ const SearchableSelect: FC<SearchableSelectProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState("");
+  // Add state to track which item is focused via arrow keys
+  const [focusedIndex, setFocusedIndex] = useState(-1); 
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -215,6 +217,11 @@ const SearchableSelect: FC<SearchableSelectProps> = ({
     }
   }, [isOpen]);
 
+  // Reset keyboard focus when search changes or dropdown opens/closes
+  useEffect(() => {
+    setFocusedIndex(-1);
+  }, [search, isOpen]);
+
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
@@ -227,6 +234,26 @@ const SearchableSelect: FC<SearchableSelectProps> = ({
       return () => document.removeEventListener("mousedown", handleClickOutside);
     }
   }, [isOpen]);
+
+  // Handle arrow key and enter key presses
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setFocusedIndex((prev) => (prev < filtered.length - 1 ? prev + 1 : prev));
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setFocusedIndex((prev) => (prev > 0 ? prev - 1 : 0));
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      if (focusedIndex >= 0 && focusedIndex < filtered.length) {
+        onChange(filtered[focusedIndex]);
+        setIsOpen(false);
+        setSearch("");
+      }
+    } else if (e.key === "Escape") {
+      setIsOpen(false);
+    }
+  };
 
   return (
     <div className="relative" ref={containerRef}>
@@ -252,11 +279,12 @@ const SearchableSelect: FC<SearchableSelectProps> = ({
             placeholder="Search counties..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={handleKeyDown} // Attach the keydown listener here
             className="w-full font-mono text-sm px-4 py-3 border-b border-border bg-card text-foreground placeholder:text-muted-foreground focus:outline-none"
           />
           <div className="max-h-64 overflow-y-auto">
             {filtered.length > 0 ? (
-              filtered.map((opt) => (
+              filtered.map((opt, idx) => (
                 <button
                   key={opt}
                   onClick={() => {
@@ -264,9 +292,10 @@ const SearchableSelect: FC<SearchableSelectProps> = ({
                     setIsOpen(false);
                     setSearch("");
                   }}
+                  // Apply focus styles if the index matches the focusedIndex
                   className={`w-full text-left font-mono text-sm px-4 py-2 transition-colors duration-150 flex items-center gap-3
                     ${
-                      value === opt
+                      value === opt || focusedIndex === idx
                         ? "bg-primary/10 text-foreground border-l-2 border-primary"
                         : "text-muted-foreground hover:bg-primary/5 hover:text-foreground"
                     }`}
@@ -1202,6 +1231,7 @@ function QuestionScreen({
   onComplete: (answers: Record<string, string>) => void;
 }) {
   const meta = VERTICAL_META[vertical];
+  
   const allQuestions =
     vertical === "healthcare" ? HEALTHCARE_QUESTIONS :
     vertical === "housing" ? HOUSING_QUESTIONS :
@@ -1211,6 +1241,7 @@ function QuestionScreen({
   const [currentIdx, setCurrentIdx] = useState(0);
   const [logged, setLogged] = useState(false);
   const [selected, setSelected] = useState<string>("");
+  const [focusedIndex, setFocusedIndex] = useState<number>(-1);
 
   const visibleQuestions = allQuestions.filter(
     (q) => !q.condition || q.condition(answers)
@@ -1220,30 +1251,66 @@ function QuestionScreen({
   const progress = currentIdx / visibleQuestions.length;
 
   const { displayed, done } = useTypewriter(current?.text ?? "", 20, true);
-  sessionStorage.setItem("gemini-answer", "");
-
+  sessionStorage.setItem("gemini-answer", "");  
+  
   useEffect(() => {
     setLogged(false);
     setSelected(answers[current?.id ?? ""] ?? "");
+    setFocusedIndex(-1); // Reset keyboard focus when question changes
   }, [currentIdx, current?.id, answers]);
 
-  const handleSelect = (value: string) => {
+  const handleSelect = useCallback((value: string) => {
     setSelected(value);
-  };
+  }, []);
 
-const handleNext = () => {
-  if (!selected) return;
-  const newAnswers = { ...answers, [current.id]: selected };
-  setAnswers(newAnswers);
+  const handleNext = useCallback(() => {
+    if (!selected) return;
+    const newAnswers = { ...answers, [current.id]: selected };
+    setAnswers(newAnswers);
 
-  const isLastQuestion = currentIdx + 1 >= visibleQuestions.length;
+    const isLastQuestion = currentIdx + 1 >= visibleQuestions.length;
 
-  if (!isLastQuestion) {
-    setCurrentIdx((i) => i + 1);
-  } else {
-    onComplete(newAnswers);
-  }
-};
+    if (!isLastQuestion) {
+      setCurrentIdx((i) => i + 1);
+    } else {
+      onComplete(newAnswers);
+    }
+  }, [answers, current?.id, currentIdx, selected, visibleQuestions.length, onComplete]);
+
+  // Global Keyboard Navigation
+  useEffect(() => {
+    const handleGlobalKeyDown = (e: KeyboardEvent) => {
+      if (current?.type === "searchable-select") return;
+      if (!current?.options || !done) return;
+
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        setFocusedIndex((prev) => (prev < current.options!.length - 1 ? prev + 1 : prev));
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        setFocusedIndex((prev) => (prev > 0 ? prev - 1 : 0));
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        if (focusedIndex >= 0 && focusedIndex < current.options.length) {
+          const focusedValue = current.options[focusedIndex].value;
+          
+          if (selected === focusedValue) {
+            // If the focused item is ALREADY selected, the second Enter press submits it
+            handleNext();
+          } else {
+            // Otherwise, the first Enter press selects it
+            handleSelect(focusedValue);
+          }
+        } else if (selected) {
+          // If an option is already selected (via mouse) and Enter is pressed, proceed
+          handleNext();
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleGlobalKeyDown);
+    return () => window.removeEventListener("keydown", handleGlobalKeyDown);
+  }, [current, focusedIndex, done, selected, handleSelect, handleNext]);
 
   if (!current) return null;
 
@@ -1295,14 +1362,15 @@ const handleNext = () => {
               isSelected={selected !== ""}
             />
           ) : (
-            current.options?.map((opt) => (
+            current.options?.map((opt, idx) => (
               <button
                 key={opt.value}
                 onClick={() => handleSelect(opt.value)}
                 className={`w-full text-left font-mono text-sm px-4 py-3 border transition-all duration-150 flex items-center gap-3
-                  ${selected === opt.value
-                    ? "border-primary bg-primary/10 text-foreground"
-                    : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground"
+                  ${
+                    selected === opt.value || focusedIndex === idx
+                      ? "border-primary bg-primary/10 text-foreground"
+                      : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground"
                   }`}
               >
                 <span className={`w-3 h-3 border shrink-0 flex items-center justify-center
@@ -1323,15 +1391,15 @@ const handleNext = () => {
         <div className="ml-12 flex items-center gap-4">
           <button
             onClick={handleNext}
-              disabled={!selected}
-              className={`font-mono text-sm px-6 py-3 tracking-widest transition-all duration-150 flex items-center gap-3
-                ${selected
-                  ? "bg-primary text-primary-foreground hover:bg-foreground"
-                  : "bg-muted text-muted-foreground cursor-not-allowed"
-                }`}
-            >
-              LOG EVIDENCE →
-            </button>
+            disabled={!selected}
+            className={`font-mono text-sm px-6 py-3 tracking-widest transition-all duration-150 flex items-center gap-3
+              ${selected
+                ? "bg-primary text-primary-foreground hover:bg-foreground"
+                : "bg-muted text-muted-foreground cursor-not-allowed"
+              }`}
+          >
+            LOG EVIDENCE →
+          </button>
         </div>
       )}
 
