@@ -28,6 +28,7 @@ interface Program {
 interface ChatTurn {
   role: "user" | "model";
   text: string;
+  isHidden?: boolean;
 }
 
 // ─── California Counties Data ──────────────────────────────────────────────────
@@ -93,6 +94,69 @@ const CALIFORNIA_COUNTIES = [
   "Yuba County",
 ];
 
+export const BENEFITSCAL_URL = "https://benefitscal.com/";
+
+export const COUNTY_BENEFITS_PAGES: Record<string, string> = {
+  "Alameda County": "https://socialservices.alamedacountyca.gov/contact-us/online-self-services-virtual-kiosk",
+  "Alpine County": "https://www.alpinecountyca.gov/289/BenefitsCal",
+  "Amador County": "https://www.amadorcounty.gov/services/public-health/medi-cal-resources",
+  "Butte County": "https://www.buttecounty.ca.gov/394/Benefits",
+  "Calaveras County": "https://hhsa.calaverasgov.us/HHSA/Human-Services/Public-Assistance",
+  "Colusa County": "https://www.countyofcolusaca.gov/789/Public-Assistance",
+  "Contra Costa County": "https://ehsd.org/benefit-programs/",
+  "Del Norte County": "https://www.co.del-norte.ca.us/DHHS-PA-CalFresh-1",
+  "El Dorado County": "https://www.eldoradocounty.ca.gov/Health-Well-Being/Human-Services/Food-Assistance/CalFresh",
+  "Fresno County": "https://www.fresnocountyca.gov/Departments/Social-Services/Assistance-Programs",
+  "Glenn County": "https://www.countyofglenn.net/government/departments/health-human-services/social-services/public-assistance",
+  "Humboldt County": "https://humboldtgov.org/332/Social-Services",
+  "Imperial County": "https://www.imperialcountysocialservices.org/calfresh",
+  "Inyo County": "https://www.inyocounty.us/aging-social-services/apply-public-assistance",
+  "Kern County": "https://www.kcdhs.org/services/apply-for-benefits/calfresh",
+  "Kings County": "https://www.countyofkingsca.gov/departments/human-services-agency/benefit-services-division/health-care-benefits/calfresh-snap",
+  "Lake County": "https://www.lakecountyca.gov/803/Financial-Assistance",
+  "Lassen County": "https://www.lassencounty.org/dept/lassen-works/lassen-works",
+  "Los Angeles County": "https://dpss.lacounty.gov/en.html",
+  "Madera County": "https://www.maderacounty.com/government/social-services/eligibility-services",
+  "Marin County": "https://hhs.marincounty.gov/services/apply-public-assistance-benefits-medi-cal-calfresh-calworks",
+  "Mariposa County": "https://www.mariposacounty.gov/329/Public-Assistance",
+  "Mendocino County": "https://www.mendocinocounty.gov/departments/social-services/employment-family-assistance-services/",
+  "Merced County": "https://www.countyofmerced.com/hsa/index.htm",
+  "Modoc County": "https://benefitscal.com/",
+  "Mono County": "https://www.monohealth.com/hhs/page/assistance-programs",
+  "Monterey County": "https://www.countyofmonterey.gov/government/departments-i-z/social-services/calfresh",
+  "Napa County": "https://www.napacounty.gov/3304/Self-Sufficiency-New-Version",
+  "Nevada County": "https://www.nevadacountyca.gov/902/Public-Assistance",
+  "Orange County": "https://www.ssa.ocgov.com/cash-calfresh",
+  "Placer County": "https://www.placer.ca.gov/2111/CalWORKs-Employment-Services",
+  "Plumas County": "https://www.plumascounty.us/241/Eligibility",
+  "Riverside County": "https://rivcodpss.org/",
+  "Sacramento County": "https://ha.saccounty.gov/content/ha/us/en/benefits/benefitscal.html",
+  "San Benito County": "https://hhsa.sanbenitocountyca.gov/public-assistance-2/",
+  "San Bernardino County": "https://wp.sbcounty.gov/tad/",
+  "San Diego County": "https://www.sandiegocounty.gov/content/sdc/hhsa/programs/ssp/OIRA/public-assistance-programs/",
+  "San Francisco County": "https://www.sfhsa.org/services",
+  "San Joaquin County": "https://www.sjchsa.org/assistance/calfresh",
+  "San Luis Obispo County": "https://www.slocounty.ca.gov/departments/social-services/calfresh",
+  "San Mateo County": "https://www.smcgov.org/hsa/calfresh",
+  "Santa Barbara County": "https://secure.countyofsb.org/dss/",
+  "Santa Clara County": "https://ssa.santaclaracounty.gov/apply-public-benefits",
+  "Santa Cruz County": "https://www.santacruzhumanservices.org/employmentbenefits/calworks/wheredoiapply",
+  "Shasta County": "https://www.shastacounty.gov/health-human-services/page/calfresh-calworks-medi-cal-other-aid-programs",
+  "Sierra County": "https://www.sierracounty.ca.gov/306/Public-Assistance",
+  "Siskiyou County": "https://www.siskiyoucounty.gov/eta/page/calfresh-foodnutritional-assistance",
+  "Solano County": "https://www.solanocounty.gov/government/health-social-services-hss/employment-eligibility/benefitscal",
+  "Sonoma County": "https://sonomacounty.ca.gov/health-and-human-services/human-services",
+  "Stanislaus County": "https://www.csa-stanislaus.com/cal-fresh/",
+  "Sutter County": "https://www.sutter.gov/government/county-departments/health-and-human-services/employment-and-eligibility-services-branch/calfresh-program",
+  "Tehama County": "https://www.tcdss.org/index.php/public-assistance",
+  "Trinity County": "https://www.trinitycounty.org/251/Public-Assistance",
+  "Tulare County": "https://tularecounty.ca.gov/health-human-services-agency-hhsa",
+  "Tuolumne County": "https://www.tuolumnecounty.ca.gov/index.aspx?NID=292",
+  "Ventura County": "https://venturacounty.gov/human-services-agency/apply/",
+  "Yolo County": "https://www.yolocounty.gov/government/general-government-departments/health-human-services/welfare",
+  "Yuba County": "https://www.yuba.gov/departments/health_and_human_services/index.php"
+};
+
 // ─── GeminiResponseRenderer Component ──────────────────────────────────────────
 
 interface GeminiResponseRendererProps {
@@ -138,6 +202,8 @@ const SearchableSelect: FC<SearchableSelectProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState("");
+  // Add state to track which item is focused via arrow keys
+  const [focusedIndex, setFocusedIndex] = useState(-1); 
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -151,6 +217,11 @@ const SearchableSelect: FC<SearchableSelectProps> = ({
     }
   }, [isOpen]);
 
+  // Reset keyboard focus when search changes or dropdown opens/closes
+  useEffect(() => {
+    setFocusedIndex(-1);
+  }, [search, isOpen]);
+
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
@@ -163,6 +234,26 @@ const SearchableSelect: FC<SearchableSelectProps> = ({
       return () => document.removeEventListener("mousedown", handleClickOutside);
     }
   }, [isOpen]);
+
+  // Handle arrow key and enter key presses
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setFocusedIndex((prev) => (prev < filtered.length - 1 ? prev + 1 : prev));
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setFocusedIndex((prev) => (prev > 0 ? prev - 1 : 0));
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      if (focusedIndex >= 0 && focusedIndex < filtered.length) {
+        onChange(filtered[focusedIndex]);
+        setIsOpen(false);
+        setSearch("");
+      }
+    } else if (e.key === "Escape") {
+      setIsOpen(false);
+    }
+  };
 
   return (
     <div className="relative" ref={containerRef}>
@@ -188,11 +279,12 @@ const SearchableSelect: FC<SearchableSelectProps> = ({
             placeholder="Search counties..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={handleKeyDown} // Attach the keydown listener here
             className="w-full font-mono text-sm px-4 py-3 border-b border-border bg-card text-foreground placeholder:text-muted-foreground focus:outline-none"
           />
           <div className="max-h-64 overflow-y-auto">
             {filtered.length > 0 ? (
-              filtered.map((opt) => (
+              filtered.map((opt, idx) => (
                 <button
                   key={opt}
                   onClick={() => {
@@ -200,9 +292,10 @@ const SearchableSelect: FC<SearchableSelectProps> = ({
                     setIsOpen(false);
                     setSearch("");
                   }}
+                  // Apply focus styles if the index matches the focusedIndex
                   className={`w-full text-left font-mono text-sm px-4 py-2 transition-colors duration-150 flex items-center gap-3
                     ${
-                      value === opt
+                      value === opt || focusedIndex === idx
                         ? "bg-primary/10 text-foreground border-l-2 border-primary"
                         : "text-muted-foreground hover:bg-primary/5 hover:text-foreground"
                     }`}
@@ -558,13 +651,13 @@ function determineHealthcarePrograms(a: Record<string, string>): Program[] {
 
   return [
     {
-      name: "Medicaid",
+      name: "Medi-Cal",
       agency: "CMS / State Health Dept.",
       description: "Full health coverage for low-income individuals and families, including doctor visits, hospital care, prescriptions, and preventive services.",
       eligible: isCitizen && (lowIncome || (midLowIncome && largeHousehold)),
       reason: isCitizen && (lowIncome || (midLowIncome && largeHousehold))
-        ? "Your income level and household size fall within Medicaid's coverage thresholds."
-        : "Medicaid requires income below 138% of the federal poverty level for your household size.",
+        ? "Your income level and household size fall within Medi-Cal's coverage thresholds."
+        : "Medi-Cal requires income below 138% of the federal poverty level for your household size.",
       urgency: "immediate",
     },
     {
@@ -577,13 +670,13 @@ function determineHealthcarePrograms(a: Record<string, string>): Program[] {
         : "CHIP is limited to households with children under 19 meeting income criteria.",
     },
     {
-      name: "ACA Marketplace Subsidies",
+      name: "Covered California Subsidies",
       agency: "Healthcare.gov / State Exchange",
       description: "Premium tax credits that reduce the cost of health insurance purchased through the marketplace — often making coverage under $50/month.",
       eligible: !isSenior && isCitizen && midIncome && a.insured === "no",
       reason: !isSenior && isCitizen && midIncome && a.insured === "no"
         ? "Your income and uninsured status make you eligible for substantial premium subsidies."
-        : "ACA subsidies are available for uninsured individuals within the 100–400% poverty range.",
+        : "Covered California subsidies are available for uninsured individuals within the 100–400% poverty range.",
     },
     {
       name: "Medicare Savings Programs",
@@ -604,13 +697,13 @@ function determineHealthcarePrograms(a: Record<string, string>): Program[] {
         : "Extra Help is reserved for Medicare beneficiaries with income and resources below program limits.",
     },
     {
-      name: "Medicaid Maternity Coverage",
+      name: "Medi-Cal Maternity Coverage",
       agency: "CMS / State Health Dept.",
       description: "Comprehensive prenatal, delivery, and postpartum care coverage for pregnant individuals regardless of immigration status in many states.",
       eligible: isPregnant && midIncome,
       reason: isPregnant && midIncome
-        ? "Your pregnancy and income level qualify you for expanded maternity Medicaid coverage."
-        : "Maternity Medicaid is available to pregnant individuals within income guidelines.",
+        ? "Your pregnancy and income level qualify you for expanded maternity Medi-Cal coverage."
+        : "Maternity Medi-Cal is available to pregnant individuals within income guidelines.",
     },
   ];
 }
@@ -628,7 +721,7 @@ function determineHousingPrograms(a: Record<string, string>): Program[] {
 
   return [
     {
-      name: "Section 8 Housing Choice Voucher",
+      name: "Housing Choice Voucher / local PHA",
       agency: "HUD / Local Housing Authority",
       description: "Rental assistance vouchers that pay the difference between what you can afford and the fair market rent in your area.",
       eligible: isCitizen && (lowIncome || (midLowIncome && largeHousehold)),
@@ -712,13 +805,13 @@ function determineFinancialPrograms(a: Record<string, string>): Program[] {
 
   return [
     {
-      name: "SNAP (Food Stamps)",
+      name: "CalFresh (Food Stamps/SNAP)",
       agency: "USDA / State SNAP Office",
       description: "Monthly benefits loaded onto an EBT card for purchasing groceries and food staples at authorized retailers.",
       eligible: isCitizen && (lowIncome || (midLowIncome && hasDependents)),
       reason: isCitizen && (lowIncome || (midLowIncome && hasDependents))
-        ? "Your income level falls within SNAP gross income limits for your household size."
-        : "SNAP requires income at or below 130% of the federal poverty level.",
+        ? "Your income level falls within CalFresh gross income limits for your household size."
+        : "CalFresh requires income at or below 130% of the federal poverty level.",
       urgency: lowIncome ? "immediate" : "standard",
     },
     {
@@ -741,13 +834,13 @@ function determineFinancialPrograms(a: Record<string, string>): Program[] {
         : "EITC requires earned income within IRS thresholds and a filed tax return.",
     },
     {
-      name: "TANF (Temporary Assistance for Needy Families)",
+      name: "CalWORKs (TANF)",
       agency: "HHS / State TANF Office",
       description: "Monthly cash assistance, job training, and childcare support for families with children in financial hardship.",
       eligible: hasDependents && lowIncome && isCitizen,
       reason: hasDependents && lowIncome && isCitizen
-        ? "Your household's children and income level qualify you for TANF cash and support services."
-        : "TANF is designed for families with dependent children at or below poverty level.",
+        ? "Your household's children and income level qualify you for CalWORKs cash and support services."
+        : "CalWORKs is designed for families with dependent children at or below poverty level.",
       urgency: "immediate",
     },
     {
@@ -803,21 +896,21 @@ const VERTICAL_META = {
     label: "Healthcare",
     tagline: "Medical coverage & prescription access",
     icon: "⚕",
-    description: "Investigate eligibility for Medicaid, CHIP, ACA subsidies, Medicare savings programs, and maternity coverage.",
+    description: "Investigate eligibility for Medi-Cal, CHIP, Covered California subsidies, Medicare savings programs, and maternity coverage.",
     color: "#5a7fa8",
   },
   housing: {
     label: "Housing",
     tagline: "Rental assistance & housing stability",
     icon: "⌂",
-    description: "Investigate eligibility for Section 8 vouchers, emergency rental aid, public housing, veteran housing, and rural programs.",
+    description: "Investigate eligibility for Housing Choice / PHA vouchers, emergency rental aid, public housing, veteran housing, and rural programs.",
     color: "#7a9e6e",
   },
   financials: {
     label: "Financial Aid",
     tagline: "Income support & tax benefits",
     icon: "$",
-    description: "Investigate eligibility for SNAP, SSI, EITC, TANF, energy assistance, and veteran financial programs.",
+    description: "Investigate eligibility for CalFresh, SSI, EITC, CalWORKs, energy assistance, and veteran financial programs.",
     color: "#c8972a",
   },
 };
@@ -1041,7 +1134,7 @@ function Landing({ onStart, caseNumber }: { onStart: () => void; caseNumber: str
             <ul className="font-mono text-xs text-muted-foreground space-y-2">
               <li><span className="text-primary mr-2">▸</span>No account required. No login. No sign-up.</li>
               <li><span className="text-primary mr-2">▸</span>All answers exist only in this browser session.</li>
-              <li><span className="text-primary mr-2">▸</span>Nothing is stored, transmitted, or retained after you close this page.</li>
+              <li><span className="text-primary mr-2">▸</span>Nothing is retained after you close this page.</li>
               <li><span className="text-primary mr-2">▸</span>We never ask for your name, SSN, or contact information.</li>
             </ul>
           </div>
@@ -1138,6 +1231,7 @@ function QuestionScreen({
   onComplete: (answers: Record<string, string>) => void;
 }) {
   const meta = VERTICAL_META[vertical];
+  
   const allQuestions =
     vertical === "healthcare" ? HEALTHCARE_QUESTIONS :
     vertical === "housing" ? HOUSING_QUESTIONS :
@@ -1147,6 +1241,7 @@ function QuestionScreen({
   const [currentIdx, setCurrentIdx] = useState(0);
   const [logged, setLogged] = useState(false);
   const [selected, setSelected] = useState<string>("");
+  const [focusedIndex, setFocusedIndex] = useState<number>(-1);
 
   const visibleQuestions = allQuestions.filter(
     (q) => !q.condition || q.condition(answers)
@@ -1156,30 +1251,66 @@ function QuestionScreen({
   const progress = currentIdx / visibleQuestions.length;
 
   const { displayed, done } = useTypewriter(current?.text ?? "", 20, true);
-  sessionStorage.setItem("gemini-answer", "");
-
+  sessionStorage.setItem("gemini-answer", "");  
+  
   useEffect(() => {
     setLogged(false);
     setSelected(answers[current?.id ?? ""] ?? "");
+    setFocusedIndex(-1); // Reset keyboard focus when question changes
   }, [currentIdx, current?.id, answers]);
 
-  const handleSelect = (value: string) => {
+  const handleSelect = useCallback((value: string) => {
     setSelected(value);
-  };
+  }, []);
 
-const handleNext = () => {
-  if (!selected) return;
-  const newAnswers = { ...answers, [current.id]: selected };
-  setAnswers(newAnswers);
+  const handleNext = useCallback(() => {
+    if (!selected) return;
+    const newAnswers = { ...answers, [current.id]: selected };
+    setAnswers(newAnswers);
 
-  const isLastQuestion = currentIdx + 1 >= visibleQuestions.length;
+    const isLastQuestion = currentIdx + 1 >= visibleQuestions.length;
 
-  if (!isLastQuestion) {
-    setCurrentIdx((i) => i + 1);
-  } else {
-    onComplete(newAnswers);
-  }
-};
+    if (!isLastQuestion) {
+      setCurrentIdx((i) => i + 1);
+    } else {
+      onComplete(newAnswers);
+    }
+  }, [answers, current?.id, currentIdx, selected, visibleQuestions.length, onComplete]);
+
+  // Global Keyboard Navigation
+  useEffect(() => {
+    const handleGlobalKeyDown = (e: KeyboardEvent) => {
+      if (current?.type === "searchable-select") return;
+      if (!current?.options || !done) return;
+
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        setFocusedIndex((prev) => (prev < current.options!.length - 1 ? prev + 1 : prev));
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        setFocusedIndex((prev) => (prev > 0 ? prev - 1 : 0));
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        if (focusedIndex >= 0 && focusedIndex < current.options.length) {
+          const focusedValue = current.options[focusedIndex].value;
+          
+          if (selected === focusedValue) {
+            // If the focused item is ALREADY selected, the second Enter press submits it
+            handleNext();
+          } else {
+            // Otherwise, the first Enter press selects it
+            handleSelect(focusedValue);
+          }
+        } else if (selected) {
+          // If an option is already selected (via mouse) and Enter is pressed, proceed
+          handleNext();
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleGlobalKeyDown);
+    return () => window.removeEventListener("keydown", handleGlobalKeyDown);
+  }, [current, focusedIndex, done, selected, handleSelect, handleNext]);
 
   if (!current) return null;
 
@@ -1231,14 +1362,15 @@ const handleNext = () => {
               isSelected={selected !== ""}
             />
           ) : (
-            current.options?.map((opt) => (
+            current.options?.map((opt, idx) => (
               <button
                 key={opt.value}
                 onClick={() => handleSelect(opt.value)}
                 className={`w-full text-left font-mono text-sm px-4 py-3 border transition-all duration-150 flex items-center gap-3
-                  ${selected === opt.value
-                    ? "border-primary bg-primary/10 text-foreground"
-                    : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground"
+                  ${
+                    selected === opt.value || focusedIndex === idx
+                      ? "border-primary bg-primary/10 text-foreground"
+                      : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground"
                   }`}
               >
                 <span className={`w-3 h-3 border shrink-0 flex items-center justify-center
@@ -1259,15 +1391,15 @@ const handleNext = () => {
         <div className="ml-12 flex items-center gap-4">
           <button
             onClick={handleNext}
-              disabled={!selected}
-              className={`font-mono text-sm px-6 py-3 tracking-widest transition-all duration-150 flex items-center gap-3
-                ${selected
-                  ? "bg-primary text-primary-foreground hover:bg-foreground"
-                  : "bg-muted text-muted-foreground cursor-not-allowed"
-                }`}
-            >
-              LOG EVIDENCE →
-            </button>
+            disabled={!selected}
+            className={`font-mono text-sm px-6 py-3 tracking-widest transition-all duration-150 flex items-center gap-3
+              ${selected
+                ? "bg-primary text-primary-foreground hover:bg-foreground"
+                : "bg-muted text-muted-foreground cursor-not-allowed"
+              }`}
+          >
+            LOG EVIDENCE →
+          </button>
         </div>
       )}
 
@@ -1378,10 +1510,7 @@ function Verdict({
   const [userQuestion, setUserQuestion] = useState("");
   const [isAsking, setIsAsking] = useState(false);
   
-  const [history, setHistory] = useState<ChatTurn[]>(() => {
-    const saved = sessionStorage.getItem(`chat_history_${caseNumber}`);
-    return saved ? JSON.parse(saved) : [];
-  });
+  const [history, setHistory] = useState<ChatTurn[]>([]);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -1399,20 +1528,40 @@ function Verdict({
 
   const handleAsk = async () => {
     if (!userQuestion.trim() || isAsking) return;
-    
+
     const currentQuestion = userQuestion;
     setUserQuestion("");
     setIsAsking(true);
 
+    // Add only the user's question to the visual UI
     setHistory((prev) => [...prev, { role: "user", text: currentQuestion }]);
 
     try {
       let data;
+      
+      // 1. Build the context string dynamically from your props
+      const formattedAnswers = Object.entries(answers || {})
+        .map(([key, value]) => `${key}: ${value}`)
+        .join("\n");
+
+      const formattedVerdict = programs.map(p => 
+        `Program: ${p.name}\nEligible: ${p.eligible}\nReason: ${p.reason}`
+      ).join("\n\n");
+
+      const contextText = `User Answers:\n${formattedAnswers}\n\nVerdict:\n${formattedVerdict}`;
+
+      // 2. Decide how to send it based on if it is the first question
       if (history.length === 0) {
-        const userDataString = `User Context: ${JSON.stringify(answers)}. User Question: ${currentQuestion}`;
+        // First turn: Use submitPrompt and append as one string
+        const userDataString = `${contextText}\n\nUser Question: ${currentQuestion}`;
         data = await submitPrompt(userDataString, vertical);
       } else {
-        data = await submitChat(history, vertical, currentQuestion);
+        // Subsequent turns: Append data as the first item in the JSON under role: "user"
+        const contextTurn = { role: "user", text: contextText };
+        
+        // Payload = [The Context Data] + [Previous Chat] 
+        const payloadForAPI = [contextTurn, ...history];
+        data = await submitChat(payloadForAPI, vertical, currentQuestion);
       }
 
       const modelText = typeof data === "string" ? data : data?.response;
@@ -1433,6 +1582,7 @@ function Verdict({
   const ineligible = programs.filter((p) => !p.eligible);
   const hasEligible = eligible.length > 0;
   const immediate = eligible.filter((p) => p.urgency === "immediate");
+  const countyUrl = COUNTY_BENEFITS_PAGES[answers.county];
 
   return (
     <div className="min-h-screen bg-background flex flex-col p-8 md:p-16 max-w-7xl mx-auto w-full">
@@ -1462,11 +1612,18 @@ function Verdict({
                   ? `${eligible.length} program${eligible.length > 1 ? "s" : ""} found for your case.`
                   : "No matching programs identified."}
               </h2>
-              {hasEligible && (
-                <p className="font-mono text-sm text-gray-400 mt-3 max-w-xl">
-                  The evidence supports eligibility for the programs listed below. Each case is unique — contact the relevant agency to confirm and apply.
-                </p>
-              )}
+		{hasEligible && (
+		  <>
+		  <p className="font-mono text-sm text-gray-400 mt-3 max-w-xl">
+		    The evidence supports eligibility for the programs listed below. Each case is unique — contact the relevant agency to confirm and apply.
+		  </p>
+		  <p style={{ textDecoration: 'underline' }}>
+		    <a href={BENEFITSCAL_URL} target="_blank" rel="noopener noreferrer">Apply on BenefitsCal</a>
+		    <br />
+		    <a href={countyUrl} target="_blank" rel="noopener noreferrer">Get county help</a>
+		  </p>
+		  </>
+		)}
             </div>
           </div>
 
@@ -1693,7 +1850,17 @@ export default function App() {
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [programs, setPrograms] = useState<Program[]>([]);
   const [geminiAnswer, setGeminiAnswer] = useState("");
+  useEffect(() => {
+    const handleTabClose = () => {
+      sessionStorage.clear();
+    };
 
+    window.addEventListener("beforeunload", handleTabClose);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleTabClose);
+    };
+  }, []);
   const handleVerticalSelect = (v: Vertical) => {
     setVertical(v);
     setStep("questions");
@@ -1706,10 +1873,13 @@ export default function App() {
   };
   
   const handleProcessingDone = () => {
-    if (!vertical) return;
-    const results = getEligibilityResults(vertical, answers);
-    setPrograms(results);
-    setStep("verdict");
+    let result: Program[] = [];
+    if (vertical === "healthcare") result = determineHealthcarePrograms(answers);
+    if (vertical === "housing") result = determineHousingPrograms(answers);
+    if (vertical === "financials") result = determineFinancialPrograms(answers);
+    
+    setPrograms(result);
+    setStep("verdict"); // Just set the programs and move to the verdict screen!
   };
 
   const handleRestart = () => {
