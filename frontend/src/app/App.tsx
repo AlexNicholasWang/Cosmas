@@ -1572,6 +1572,30 @@ function Verdict({
               </div>
             )}
 
+	    {/* Suggested Questions (Only show on first prompt) */}
+            {history.length === 0 && (
+              <div className="flex flex-row flex-wrap gap-3 mb-4">
+                <button
+                  onClick={() => setUserQuestion("What are the next steps for ")}
+                  className="font-mono text-xs px-3 py-2 border border-[#c8972a]/40 text-[#c8972a] hover:bg-[#c8972a]/10 transition-colors text-left"
+                >
+                  "What are the next steps for ___?"
+                </button>
+                <button
+                  onClick={() => setUserQuestion("why don't I qualify for ")}
+                  className="font-mono text-xs px-3 py-2 border border-[#c8972a]/40 text-[#c8972a] hover:bg-[#c8972a]/10 transition-colors text-left"
+                >
+                  "Why don't I qualify for ___?"
+                </button>
+                <button
+                  onClick={() => setUserQuestion("Can you check for more opportunities?")}
+                  className="font-mono text-xs px-3 py-2 border border-[#c8972a]/40 text-[#c8972a] hover:bg-[#c8972a]/10 transition-colors text-left"
+                >
+                  "Can you check for more opportunities?"
+                </button>
+              </div>
+            )}
+
             {/* Input Area */}
             <textarea
               value={userQuestion}
